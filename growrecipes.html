@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>GrowRecipes: Eat Better. Spend Less.</title>
+<meta name="description" content="Student-friendly recipes that fit your diet and budget, with the cheapest grocery store for every ingredient.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg viewBox='0 0 64 64' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='64' height='64' rx='18' fill='%232E8B57'/%3E%3Cg transform='translate(5.76 5.76) scale(.82)' fill='%23fff'%3E%3Cpath d='M11 35h42c0 11.5-9.5 19-21 19S11 46.5 11 35z'/%3E%3Cpath d='M32 29C21 30 15 24 15 15c9-1 16 4 17 14z'/%3E%3Cpath d='M32 24C32 14 38 8 49 8c1 11-6 17-17 16z'/%3E%3Cpath d='M32 36V22' stroke='%23fff' stroke-width='3.5' stroke-linecap='round' fill='none'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --g:#2E8B57; --gd:#1F5F3F; --gl:#EAF5EC; --white:#FFFFFF; --bg:#F7FBF7; --ink:#252B27;
+  --surface:#FFFFFF; --on-g:#FFFFFF;
+  --muted:color-mix(in srgb,var(--ink) 64%,#fff);
+  --line:color-mix(in srgb,var(--g) 18%,#fff);
+  --line2:color-mix(in srgb,var(--g) 32%,#fff);
+  --link:var(--gd); --soft:var(--gl);
+  --t1:#1F5F3F; --t2:#2E8B57; --t3:#6DB58C; --t4:#BFE0CB; --t5:#EAF5EC;
+  --shadow:0 1px 2px rgba(31,95,63,.06),0 10px 28px rgba(31,95,63,.08);
+  --shadow-lg:0 2px 4px rgba(31,95,63,.08),0 24px 48px rgba(31,95,63,.14);
+  --logo-word:#1F5F3F; --logo-word2:#2E8B57;
+  --r:18px; --r-sm:12px;
+  --fd:"Bricolage Grotesque","Avenir Next","Segoe UI",system-ui,sans-serif;
+  --fb:"Figtree","Avenir Next","Segoe UI",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1A14; --surface:#16251C; --gl:#1D3326; --ink:#EAF5EC; --soft:#1D3326;
+    --muted:color-mix(in srgb,#EAF5EC 68%,#16251C);
+    --line:color-mix(in srgb,#2E8B57 32%,#16251C); --line2:color-mix(in srgb,#2E8B57 55%,#16251C);
+    --link:#8FD3AB; --logo-word:#EAF5EC; --logo-word2:#6DB58C;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.25); --shadow-lg:0 24px 48px rgba(0,0,0,.4);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1A14; --surface:#16251C; --gl:#1D3326; --ink:#EAF5EC; --soft:#1D3326;
+  --muted:color-mix(in srgb,#EAF5EC 68%,#16251C);
+  --line:color-mix(in srgb,#2E8B57 32%,#16251C); --line2:color-mix(in srgb,#2E8B57 55%,#16251C);
+  --link:#8FD3AB; --logo-word:#EAF5EC; --logo-word2:#6DB58C; color-scheme:dark;
+}
+*{box-sizing:border-box}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--fb);-webkit-font-smoothing:antialiased;min-height:100vh}
+h1,h2,h3,h4{font-family:var(--fd);letter-spacing:-.02em;line-height:1.12;margin:0;font-weight:700}
+p{margin:0}
+a{color:var(--link);text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer}
+img,svg{max-width:100%}
+:focus-visible{outline:3px solid var(--g);outline-offset:2px;border-radius:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.ico{width:1.2em;height:1.2em;flex:none;vertical-align:-.2em}
+.muted{color:var(--muted)}
+.wrap{max-width:1280px;margin:0 auto;padding:0 20px}
+
+/* buttons */
+.btn{white-space:nowrap;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:2px solid transparent;border-radius:999px;padding:12px 22px;font-weight:700;font-size:16px;line-height:1.1;background:var(--g);color:var(--on-g);transition:background .15s,transform .1s,box-shadow .15s}
+.btn:hover{background:var(--gd)}
+.btn:active{transform:translateY(1px)}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--link);border-color:var(--line2)}
+.btn.ghost:hover{background:var(--gl)}
+.btn.soft{background:var(--gl);color:var(--link)}
+.btn.soft:hover{background:var(--line)}
+.btn.lg{padding:16px 30px;font-size:18px}
+.btn.sm{padding:8px 14px;font-size:14px}
+.linkbtn{background:none;border:0;padding:0;color:var(--link);font-weight:700;text-decoration:underline;text-underline-offset:3px}
+
+/* chips */
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:999px;border:2px solid var(--line);background:var(--surface);font-weight:600;transition:all .15s}
+.chip:hover{border-color:var(--g)}
+.chip[aria-pressed="true"]{background:var(--g);border-color:var(--g);color:var(--on-g)}
+.chip .ico{display:none}
+.chip[aria-pressed="true"] .ico{display:inline-block}
+.chip.sm{padding:6px 12px;font-size:14px}
+.tag{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:999px;background:var(--gl);color:var(--link);font-size:13px;font-weight:700}
+.tag.solid{background:var(--g);color:var(--on-g)}
+.tag.line{background:transparent;border:1.5px solid var(--line2)}
+
+/* choice cards */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.opt{display:flex;flex-direction:column;gap:4px;text-align:left;padding:18px 20px;border-radius:var(--r);border:2px solid var(--line);background:var(--surface);transition:all .15s}
+.opt:hover{border-color:var(--g)}
+.opt[aria-pressed="true"]{border-color:var(--g);background:var(--gl);box-shadow:inset 0 0 0 1px var(--g)}
+.opt b{font-family:var(--fd);font-size:20px;letter-spacing:-.01em}
+.opt span{color:var(--muted);font-size:14px}
+
+/* inputs */
+.inp{width:100%;padding:13px 16px;border-radius:14px;border:2px solid var(--line);background:var(--surface);color:var(--ink);font:inherit}
+.inp:focus{outline:none;border-color:var(--g);box-shadow:0 0 0 4px color-mix(in srgb,var(--g) 18%,transparent)}
+.lbl{display:block;font-weight:700;margin-bottom:6px}
+select.inp{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 20px) 50%,calc(100% - 14px) 50%;background-size:6px 6px;background-repeat:no-repeat;padding-right:38px}
+
+/* cards */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:24px}
+
+/* ---------- onboarding ---------- */
+.ob{min-height:100vh;display:flex;flex-direction:column}
+.ob-top{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;max-width:900px;margin:0 auto;width:100%}
+.ob-prog{flex:1;height:8px;border-radius:99px;background:var(--gl);overflow:hidden;max-width:360px;margin-left:auto}
+.ob-prog i{display:block;height:100%;background:var(--g);border-radius:99px;transition:width .35s ease}
+.ob-body{flex:1;width:100%;max-width:760px;margin:0 auto;padding:12px 20px 120px}
+.ob-body h1{font-size:clamp(30px,5vw,44px);margin-bottom:10px}
+.ob-body .sub{color:var(--muted);font-size:18px;margin-bottom:28px;max-width:56ch}
+.ob-body .step-in{animation:stepin .35s ease both}
+@keyframes stepin{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.ob-foot{position:fixed;left:0;right:0;bottom:0;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-top:1px solid var(--line);padding:14px 20px calc(14px + env(safe-area-inset-bottom,0px))}
+.ob-foot div{max-width:760px;margin:0 auto;display:flex;justify-content:space-between;gap:12px;align-items:center}
+.sec-t{font-family:var(--fd);font-size:20px;margin:28px 0 12px}
+.note{display:flex;gap:10px;padding:12px 16px;border-radius:14px;background:var(--gl);color:var(--ink);font-size:14.5px;align-items:flex-start}
+.note .ico{margin-top:3px;color:var(--g)}
+
+/* welcome */
+.welcome{min-height:100vh;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:40px;max-width:1180px;margin:0 auto;padding:28px 24px}
+.welcome h1{font-size:clamp(42px,6.2vw,84px);line-height:1;letter-spacing:-.035em;margin:34px 0 20px;color:var(--logo-word);text-wrap:balance}
+.welcome .sub{font-size:20px;color:var(--muted);max-width:46ch;margin-bottom:32px}
+.welcome .ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.stage{position:relative;aspect-ratio:1/1.02;max-width:520px;width:100%;justify-self:center}
+.stage .plate{position:absolute;top:0;left:2%;width:88%;aspect-ratio:1;border-radius:50%;background:var(--gl);overflow:hidden}
+.stage .plate svg{width:100%;height:100%}
+.stage .receipt{position:absolute;right:0;bottom:0;width:78%;transform:rotate(2.5deg)}
+.receipt{background:var(--surface);border:1px solid var(--line);border-radius:14px 14px 0 0;padding:16px 18px 24px;box-shadow:var(--shadow-lg);position:relative;font-size:14px}
+.receipt::after{content:"";position:absolute;left:0;right:0;bottom:0;height:10px;background:radial-gradient(circle at 7px 100%,var(--bg) 6px,transparent 6.5px) 0 0/14px 10px repeat-x}
+.receipt .rr{display:flex;align-items:baseline;gap:8px;padding:5px 0}
+.receipt .rr .dots{flex:1;border-bottom:2px dotted var(--line2);transform:translateY(-4px)}
+.receipt .rr b{font-variant-numeric:tabular-nums}
+.receipt .rr em{font-style:normal;color:var(--muted);font-size:12.5px}
+.receipt .tot{display:flex;justify-content:space-between;margin-top:8px;padding-top:10px;border-top:2px solid var(--ink);font-weight:800;font-family:var(--fd);font-size:17px}
+.receipt .save{margin-top:10px;background:var(--g);color:var(--on-g);border-radius:10px;padding:8px 12px;font-weight:700;text-align:center;font-size:14px}
+
+/* logo */
+.logo{display:inline-flex;align-items:center;gap:10px;color:var(--logo-word);font-family:var(--fd);font-weight:800;letter-spacing:-.03em;font-size:26px;line-height:1}
+.logo svg{width:1.5em;height:1.5em}
+.logo .w2{color:var(--logo-word2);font-weight:600}
+.logo.sm{font-size:21px}
+
+/* ---------- app shell ---------- */
+.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--surface) 94%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;gap:18px;height:68px;max-width:1320px}
+.nav{display:flex;gap:4px}
+.nav a{display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:999px;color:var(--ink);font-weight:600;font-size:15px;white-space:nowrap}
+@media (max-width:1280px){.nav a .ico{display:none}}
+.nav a:hover{background:var(--gl)}
+.nav a[aria-current="page"]{background:var(--gl);color:var(--link)}
+.nav a[aria-current="page"] .ico{color:var(--g)}
+.search{position:relative;flex:1;min-width:150px;max-width:340px;margin-left:auto}
+.search input{padding-left:42px;border-radius:999px;background:var(--bg)}
+.search .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--g);color:var(--on-g);display:grid;place-items:center;font-weight:800;font-family:var(--fd)}
+.tabs{display:none}
+main{padding:22px 0 80px}
+.page-h{margin-bottom:26px}
+.page-h h1{font-size:clamp(30px,4.4vw,46px)}
+.page-h p{color:var(--muted);font-size:18px;margin-top:8px}
+.sechead{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;margin:44px 0 16px}
+.sechead h2{font-size:clamp(22px,3vw,28px)}
+.sechead p{color:var(--muted);margin-top:4px}
+
+/* recipe cards */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:22px}
+.rail{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(270px,300px);gap:20px;overflow-x:auto;padding:4px 4px 18px;margin:0 -4px;scroll-snap-type:x proximity}
+.rail>*{scroll-snap-align:start}
+.rc{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column;transition:box-shadow .2s,transform .2s}
+.rc:hover{box-shadow:var(--shadow-lg);transform:translateY(-2px)}
+.rc-art{display:block;aspect-ratio:3/2;background:var(--gl)}
+.rc-art svg{width:100%;height:100%;display:block}
+.heart{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:0;background:var(--surface);color:var(--link);display:grid;place-items:center;box-shadow:0 2px 8px rgba(31,95,63,.18);transition:transform .15s}
+.heart:hover{transform:scale(1.08)}
+.heart[aria-pressed="true"]{background:var(--g);color:var(--on-g)}
+.heart[aria-pressed="true"] svg{fill:currentColor}
+.rc-b{padding:16px 18px 18px;display:flex;flex-direction:column;gap:10px;flex:1}
+.rc-b h3{font-size:20px}
+.rc-b h3 a{color:var(--ink)}
+.rc-b h3 a:hover{color:var(--link)}
+.rc-meta{display:flex;flex-wrap:wrap;gap:6px 14px;color:var(--muted);font-size:14px;align-items:center}
+.rc-meta span{display:inline-flex;align-items:center;gap:5px}
+.rc-price{display:flex;align-items:baseline;gap:8px}
+.rc-price b{font-family:var(--fd);font-size:24px;color:var(--link);letter-spacing:-.02em}
+.rc-price span{color:var(--muted);font-size:14px}
+.rc-tags{display:flex;flex-wrap:wrap;gap:6px}
+.rc-foot{margin-top:auto;display:flex;gap:8px}
+.rc-foot .btn{flex:1}
+.skel{border-radius:var(--r);height:380px;background:linear-gradient(100deg,var(--gl) 30%,var(--surface) 50%,var(--gl) 70%) 0 0/300% 100%;animation:sk 1.2s linear infinite;border:1px solid var(--line)}
+@keyframes sk{to{background-position:-300% 0}}
+.spin{display:inline-block;animation:rot 1s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* hero (home) */
+.hello{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:end;margin-bottom:8px}
+.hello h1{font-size:clamp(32px,5vw,54px)}
+.hello p{font-size:19px;color:var(--muted);margin-top:10px}
+.prefline{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;align-items:center}
+
+/* filters */
+.filters{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:22px}
+.filters .inp{width:auto;min-width:150px}
+.empty{text-align:center;padding:56px 20px;border:2px dashed var(--line2);border-radius:var(--r);color:var(--muted)}
+.empty h3{color:var(--ink);margin-bottom:8px;font-size:22px}
+.empty .btn{margin-top:16px}
+
+/* recipe page */
+.back{display:inline-flex;align-items:center;gap:8px;font-weight:700;margin-bottom:18px;color:var(--link)}
+.rhero{display:grid;grid-template-columns:1.1fr 1fr;gap:34px;align-items:start}
+.rhero .art{border-radius:var(--r);overflow:hidden;background:var(--gl);aspect-ratio:3/2;border:1px solid var(--line)}
+.rhero .art svg{width:100%;height:100%;display:block}
+.rhero h1{font-size:clamp(30px,4.4vw,48px);margin:10px 0 12px}
+.rhero .desc{font-size:18px;color:var(--muted);margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0}
+.stat{background:var(--gl);border-radius:14px;padding:12px 14px}
+.stat b{display:block;font-family:var(--fd);font-size:20px}
+.stat span{font-size:13.5px;color:var(--muted)}
+.costbox{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--surface)}
+.costbox>div{padding:14px 18px}
+.costbox>div+div{border-left:1px solid var(--line)}
+.costbox b{display:block;font-family:var(--fd);font-size:30px;color:var(--link);letter-spacing:-.03em;line-height:1.1}
+.costbox span{font-size:13.5px;color:var(--muted)}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.two{display:grid;grid-template-columns:1fr 1.2fr;gap:28px;margin-top:36px;align-items:start}
+.ings{list-style:none;margin:0;padding:0}
+.ings li{border-bottom:1px solid var(--line)}
+.ings label{display:flex;align-items:center;gap:12px;padding:12px 4px;cursor:pointer}
+.ings .q{flex:1}
+.ings .q small{display:block;color:var(--muted);font-size:13px}
+.ings .pr{font-variant-numeric:tabular-nums;font-weight:700;color:var(--link)}
+.ings li.done .q{text-decoration:line-through;color:var(--muted)}
+.cb{appearance:none;width:24px;height:24px;border-radius:8px;border:2px solid var(--line2);background:var(--surface);display:grid;place-items:center;flex:none;cursor:pointer;margin:0}
+.cb:checked{background:var(--g);border-color:var(--g)}
+.cb:checked::after{content:"";width:6px;height:11px;border:solid var(--on-g);border-width:0 3px 3px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:grid;gap:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:14px;align-items:start}
+.steps li::before{content:counter(s);width:40px;height:40px;border-radius:50%;background:var(--g);color:var(--on-g);display:grid;place-items:center;font-family:var(--fd);font-weight:800;font-size:18px}
+.steps p{padding-top:6px}
+.steps .tm{display:inline-flex;margin-left:8px;vertical-align:1px}
+.ask{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.sample-note{font-size:13.5px;color:var(--muted);display:flex;gap:8px;align-items:flex-start}
+
+/* comparison */
+.cmp{margin-top:44px;scroll-margin-top:90px}
+.cmp-h{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:flex-end;margin-bottom:16px}
+.seg{display:inline-flex;background:var(--gl);padding:4px;border-radius:999px}
+.seg button{border:0;background:transparent;padding:9px 16px;border-radius:999px;font-weight:700;font-size:14.5px;color:var(--link)}
+.seg button[aria-pressed="true"]{background:var(--g);color:var(--on-g)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:18px}
+.tile{padding:16px 18px;border-radius:var(--r);border:1px solid var(--line);background:var(--surface)}
+.tile b{display:block;font-family:var(--fd);font-size:28px;letter-spacing:-.03em}
+.tile span{font-size:13.5px;color:var(--muted)}
+.tile.hi{background:var(--g);border-color:var(--g);color:var(--on-g)}
+.tile.hi span{color:color-mix(in srgb,var(--on-g) 82%,transparent)}
+.ledger{padding:6px 22px 30px;border-radius:var(--r) var(--r) 0 0;position:relative}
+.ledger::after{content:"";position:absolute;left:0;right:0;bottom:0;height:12px;background:radial-gradient(circle at 8px 100%,var(--bg) 7px,transparent 7.5px) 0 0/16px 12px repeat-x}
+.lrow{display:grid;grid-template-columns:minmax(150px,1.1fr) minmax(190px,1fr) minmax(220px,1.6fr);gap:10px 20px;padding:16px 0;border-bottom:2px dotted var(--line2);align-items:center}
+.lrow:last-child{border-bottom:0}
+.lrow .nm b{display:block}
+.lrow .nm small{color:var(--muted)}
+.best{display:flex;align-items:center;gap:10px}
+.best .price{font-family:var(--fd);font-weight:800;font-size:24px;color:var(--link);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.best .st{display:flex;flex-direction:column;line-height:1.2}
+.best .st b{font-size:15px}
+.best .st small{color:var(--muted);font-size:12.5px}
+.others{display:flex;flex-wrap:wrap;gap:6px}
+.o{font-size:13px;padding:3px 9px;border-radius:8px;background:var(--bg);border:1px solid var(--line);color:var(--muted);font-variant-numeric:tabular-nums}
+.o.win{background:var(--gl);border-color:var(--g);color:var(--link);font-weight:700}
+.savechip{margin-left:auto;font-size:13px;font-weight:700;color:var(--link);background:var(--gl);padding:3px 9px;border-radius:999px;white-space:nowrap}
+.shop{margin-top:26px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.shop .grp{padding:18px 20px}
+.shop .grp h4{display:flex;justify-content:space-between;font-size:18px;margin-bottom:6px}
+.shop .it{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
+.shop .it.done .t{text-decoration:line-through;color:var(--muted)}
+.shop .it .t{flex:1}
+.shop .it .t small{display:block;color:var(--muted);font-size:12.5px}
+.shop .it b{font-variant-numeric:tabular-nums}
+.totals{margin-top:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+
+/* assistant */
+.chat{display:grid;grid-template-columns:320px 1fr;gap:24px;align-items:start}
+.chat-side{position:sticky;top:90px;display:grid;gap:16px}
+.chat-main{display:flex;flex-direction:column;height:min(720px,calc(100vh - 150px));min-height:480px;overflow:hidden}
+.msgs{flex:1;overflow-y:auto;padding:22px;display:flex;flex-direction:column;gap:14px;scroll-behavior:smooth}
+.m{max-width:min(620px,88%);padding:12px 16px;border-radius:20px;line-height:1.5;word-wrap:break-word}
+.m.u{align-self:flex-end;background:var(--g);color:var(--on-g);border-bottom-right-radius:6px}
+.m.a{align-self:flex-start;background:var(--gl);border-bottom-left-radius:6px}
+.m ul{margin:6px 0 2px;padding-left:20px}
+.m p+p,.m ul+p,.m p+ul{margin-top:8px}
+.m .by{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--link);margin-bottom:4px}
+.dots{display:inline-flex;gap:4px;padding:4px 0}
+.dots i{width:8px;height:8px;border-radius:50%;background:var(--g);animation:bounce 1s infinite ease-in-out}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,80%,100%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+.composer{border-top:1px solid var(--line);padding:14px;background:var(--surface)}
+.composer .sug{display:flex;gap:8px;overflow-x:auto;padding-bottom:10px}
+.composer .sug .chip{white-space:nowrap}
+.composer form{display:flex;gap:10px}
+.ctxcard{padding:16px 18px}
+.ctxcard h4{font-size:17px;margin-bottom:6px}
+
+/* profile */
+.pgrid{display:grid;gap:18px;max-width:820px}
+.pgrid .card{padding:24px}
+.pgrid h3{font-size:22px;margin-bottom:4px}
+.pgrid .hint{color:var(--muted);margin-bottom:14px;font-size:15px}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.cols2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* modal / toast */
+.scrim{position:fixed;inset:0;background:rgba(20,40,30,.45);display:grid;place-items:center;z-index:80;padding:20px}
+.modal{background:var(--surface);border-radius:24px;padding:28px;max-width:440px;width:100%;box-shadow:var(--shadow-lg)}
+.modal h3{font-size:26px;margin-bottom:8px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-weight:600;z-index:90;opacity:0;transition:all .25s;pointer-events:none;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%)}
+.err{color:var(--ink);background:var(--gl);border-left:4px solid var(--g);padding:10px 14px;border-radius:10px;margin-top:12px;font-size:14.5px}
+
+/* brand page */
+.bgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+.bcell{border-radius:var(--r);padding:34px 28px;display:grid;place-items:center;min-height:190px;border:1px solid var(--line);gap:14px;text-align:center}
+.bcell.light{background:#fff;--logo-word:#1F5F3F;--logo-word2:#2E8B57}
+.bcell.dark{background:#1F5F3F;--logo-word:#fff;--logo-word2:#BFE0CB;border-color:#1F5F3F}
+.bcell.tint{background:#EAF5EC;--logo-word:#1F5F3F;--logo-word2:#2E8B57}
+.bcell small{color:var(--muted)}
+.bcell.dark small{color:#BFE0CB}
+.sw{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.sw div{border-radius:16px;padding:60px 14px 14px;font-weight:700;border:1px solid var(--line);font-size:14px;line-height:1.3}
+.sw span{display:block;font-weight:500;opacity:.85}
+.appicons{display:flex;gap:18px;align-items:flex-end;flex-wrap:wrap}
+
+@media (min-width:0px){
+  .welcome{grid-template-columns:1fr;padding-top:18px}
+  .stage{max-width:420px;order:-1;margin-bottom:-20px}
+  .rhero,.two,.chat{grid-template-columns:1fr}
+  .chat-side{position:static}
+  .lrow{grid-template-columns:1fr;gap:8px}
+  .search{max-width:none}
+  main{padding-bottom:110px}
+  .chat-main{height:calc(100vh - 250px)}
+  .hello{grid-template-columns:1fr}
+  .cols2{grid-template-columns:1fr}
+}
+@media (min-width:0px){
+  .nav{display:none}
+  .search{max-width:none}
+  .top .wrap{gap:12px}
+  .top .avatar{display:none}
+  .tabs{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;z-index:40;background:var(--surface);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px))}
+  .tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:11.5px;font-weight:700;color:var(--muted);padding:6px 0;border-radius:12px}
+  .tabs a .ico{width:23px;height:23px}
+  .tabs a[aria-current="page"]{color:var(--link);background:var(--gl)}
+  main{padding-bottom:110px}
+}
+@media (min-width:0px){
+  .stats{grid-template-columns:1fr 1fr 1fr}
+  .stat b{font-size:17px}
+  .wrap{padding:0 16px}
+  .costbox b{font-size:25px}
+  .rail{grid-auto-columns:minmax(250px,82%)}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* phone-only layout: the app is always a centred phone-width column */
+html{background:color-mix(in srgb,var(--g) 14%,var(--bg))}
+#app{max-width:430px;margin:0 auto;background:var(--bg);min-height:100vh;position:relative;box-shadow:0 0 0 1px var(--line),0 20px 60px rgba(31,95,63,.12)}
+.tabs{left:50%!important;right:auto!important;width:min(100%,430px);transform:translateX(-50%)}
+.ob-foot{left:50%;right:auto;width:min(100%,430px);transform:translateX(-50%)}
+.top .wrap{max-width:none}
+.welcome h1{font-size:clamp(40px,12vw,56px)}
+.hello h1{font-size:clamp(28px,8vw,34px)}
+.page-h h1{font-size:30px}
+.rhero h1{font-size:30px}
+.ob-body h1{font-size:30px}
+
+/* welcome fits one screen, no scrolling */
+.welcome{display:flex;flex-direction:column;height:100vh;height:100dvh;min-height:0;padding:16px 20px calc(18px + env(safe-area-inset-bottom,0px));gap:0;overflow:hidden;max-width:none;align-items:stretch}
+.welcome .logo{flex:none}
+.welcome .stage{flex:1 1 0;min-height:110px;max-width:none;width:100%;aspect-ratio:auto;margin:10px 0 8px;order:0}
+.welcome .stage .plate{top:0;left:0;height:100%;width:auto;aspect-ratio:1}
+.welcome .stage .receipt{width:64%;right:0;bottom:0;padding:10px 12px 18px;font-size:12px}
+.welcome .receipt .rr{padding:2px 0}
+.welcome .receipt .tot{margin-top:4px;padding-top:6px;font-size:14px}
+.welcome .receipt .save{margin-top:6px;padding:5px 8px;font-size:12px}
+.welcome h1{font-size:clamp(32px,9.5vw,40px);margin:6px 0 8px;line-height:1.02}
+.welcome .sub{font-size:15.5px;margin-bottom:14px;line-height:1.4}
+.welcome .ctas{flex:none;flex-wrap:nowrap}
+.welcome .ctas .btn{flex:1;padding:14px 10px;font-size:16px}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script>
+/* ================= DEMO DATA =================
+   Ingredient catalog: id|name|unit|pkgSize|pkgPrice|protein|flags|category|eachLabel|staple
+   unit: g, ml or ea. protein = g per 100 g/ml (or per piece for ea).
+   flags: m meat/poultry, k pork, f fish, s shellfish, d dairy, e egg, g gluten,
+          n tree nut, p peanut, y soy, h honey, q alcohol
+   Prices are SAMPLE values for a typical package at a mid-priced store. */
+const STORES=[['walmart','Walmart'],['nofrills','No Frills'],['freshco','FreshCo'],['foodbasics','Food Basics'],['costco','Costco'],['metro','Metro'],['loblaws','Loblaws']].map(([id,name])=>({id,name}));
+const DEFAULT_STORES=['walmart','nofrills','freshco','foodbasics'];
+const CATALOG_SRC=`
+chicken_breast|Chicken breast|g|900|11.49|23|m|Meat & seafood
+chicken_thigh|Chicken thighs (boneless)|g|900|10.49|19|m|Meat & seafood
+ground_beef|Lean ground beef|g|454|6.99|19|m|Meat & seafood
+ground_turkey|Ground turkey|g|454|6.49|19|m|Meat & seafood
+bacon|Bacon|g|375|5.99|14|k|Meat & seafood
+salmon|Salmon fillets|g|400|11.99|20|f|Meat & seafood
+tuna|Canned tuna|g|170|1.99|25|f|Pantry
+shrimp|Frozen raw shrimp|g|340|8.99|20|s|Frozen
+eggs|Large eggs|ea|12|4.29|6|e|Fridge|eggs
+tofu|Firm tofu|g|454|2.49|8|y|Fridge
+milk|Milk|ml|2000|5.49|3.4|d|Fridge
+butter|Butter|g|454|6.49|1|d|Fridge
+cheddar|Cheddar cheese|g|400|6.99|25|d|Fridge
+mozzarella|Shredded mozzarella|g|320|5.99|22|d|Fridge
+parmesan|Grated parmesan|g|250|6.99|36|d|Fridge
+feta|Feta cheese|g|200|4.49|14|d|Fridge
+yogurt|Plain Greek yogurt|g|650|4.99|9|d|Fridge
+chickpeas|Canned chickpeas|g|240|1.29|7||Pantry
+black_beans|Canned black beans|g|240|1.29|7||Pantry
+lentils|Dry red lentils|g|900|3.99|24||Pantry
+peanut_butter|Peanut butter|g|500|4.29|25|p|Pantry
+rice|White rice|g|2000|5.99|7||Grains & bread
+pasta|Spaghetti|g|900|2.49|13|g|Grains & bread
+noodles|Wheat noodles|g|400|2.49|12|g|Grains & bread
+couscous|Couscous|g|500|3.49|13|g|Grains & bread
+quinoa|Quinoa|g|500|5.99|14||Grains & bread
+oats|Rolled oats|g|1000|4.29|13|g|Grains & bread
+flour|All-purpose flour|g|2500|4.99|10|g|Grains & bread
+tortillas|Flour tortillas (8")|ea|10|3.49|4|g|Grains & bread|tortillas
+bread|Sandwich bread|ea|20|2.99|3|g|Grains & bread|slices
+naan|Naan bread|ea|4|3.49|8|g|Grains & bread|naan
+diced_tomatoes|Canned diced tomatoes|ml|796|1.99|1||Pantry
+pasta_sauce|Tomato pasta sauce|ml|650|2.99|1.5||Pantry
+tomato_paste|Tomato paste|ml|156|1.29|4||Pantry
+coconut_milk|Coconut milk|ml|400|2.29|2||Pantry
+broth|Vegetable broth|ml|900|2.99|0.5||Pantry
+soy_sauce|Soy sauce|ml|500|3.99|8|gy|Pantry
+olive_oil|Olive oil|ml|500|9.99|0||Pantry
+veg_oil|Vegetable oil|ml|1420|4.99|0||Pantry
+honey|Honey|g|500|6.99|0.3|h|Pantry
+salsa|Salsa|ml|418|3.49|1.5||Pantry
+caesar_dressing|Caesar dressing|ml|355|3.99|1|def|Pantry
+corn|Canned corn|g|340|1.29|3||Pantry
+salt|Salt|g|1000|1.49|0||Pantry||1
+pepper|Black pepper|g|100|3.99|0||Pantry||1
+cumin|Ground cumin|g|45|3.49|18||Pantry||1
+chili_powder|Chili powder|g|50|3.29|13||Pantry||1
+paprika|Smoked paprika|g|45|3.49|14||Pantry||1
+italian|Italian seasoning|g|30|2.99|10||Pantry||1
+curry_powder|Curry powder|g|60|3.49|14||Pantry||1
+onion|Yellow onions|ea|6|4.29|1||Produce|onions
+garlic|Garlic cloves|ea|30|1.99|0.2||Produce|cloves
+carrot|Carrots|g|900|2.49|1||Produce
+potato|Potatoes|g|2270|4.49|2||Produce
+sweet_potato|Sweet potatoes|g|1000|3.99|1.6||Produce
+broccoli|Broccoli|g|400|2.99|2.8||Produce
+spinach|Baby spinach|g|312|4.49|2.9||Produce
+bell_pepper|Bell peppers|ea|3|4.49|1||Produce|peppers
+tomato|Tomatoes|g|680|3.99|0.9||Produce
+cucumber|English cucumber|ea|1|1.49|1||Produce|cucumber
+zucchini|Zucchini|g|500|2.49|1.2||Produce
+mushrooms|Mushrooms|g|227|2.99|3||Produce
+romaine|Romaine hearts|g|340|3.49|1.2||Produce
+avocado|Avocados|ea|1|1.49|3||Produce|avocado
+lemon|Lemons|ea|3|2.99|0.5||Produce|lemons
+lime|Limes|ea|3|2.49|0.3||Produce|limes
+banana|Bananas|ea|5|1.99|1.3||Produce|bananas
+green_onion|Green onions|g|100|1.29|1.8||Produce
+ginger|Fresh ginger|g|100|1.49|1.8||Produce
+frozen_veg|Frozen mixed vegetables|g|750|2.99|3||Frozen
+frozen_peas|Frozen peas|g|750|2.99|5||Frozen
+`;
+const ING={};
+CATALOG_SRC.trim().split('\n').forEach(l=>{const [id,name,u,size,price,pr,fl,cat,lab,st]=l.split('|');ING[id]={id,name,u,size:+size,price:+price,pr:+pr,fl:fl||'',cat,lab:lab||'ct',staple:st==='1'}});
+
+const CUISINES=['Italian','Mexican','Asian','Mediterranean','American','Indian','Middle Eastern','Fast food alternatives','Healthy meals'];
+const ART_TYPES=['bowl','pasta','soup','wrap','pizza','egg','salad','bake'];
+
+
+/* ================= CORE ================= */
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const money=n=>'$'+(Math.round(n*100)/100).toFixed(2);
+const avg=a=>a.length?a.reduce((s,v)=>s+v,0)/a.length:0;
+const hash=s=>{let h=2166136261;s=String(s);for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return (h>>>0)/4294967296};
+function rng(seed){let a=Math.floor(hash(seed)*4294967296)||1;return()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+/* Dietary rules work on ingredient flag letters, so every recipe (including
+   AI-created ones) is checked by code, never by trusting a label. */
+const DIET_OK={
+  'Vegetarian':f=>!/[mkfs]/.test(f),
+  'Vegan':f=>!/[mkfsdeh]/.test(f),
+  'Pescatarian':f=>!/[mk]/.test(f),
+  'Halal':f=>!/[kq]/.test(f),
+  'Gluten-free':f=>!f.includes('g'),
+  'Dairy-free':f=>!f.includes('d'),
+  'Nut-free':f=>!/[np]/.test(f)
+};
+const ALLERGY={'Peanuts':'p','Tree nuts':'n','Shellfish':'s','Eggs':'e','Milk':'d','Soy':'y'};
+
+function dietsOf(f,prot){
+  const d=[];
+  const meat=/[mk]/.test(f), fish=/[fs]/.test(f);
+  if(!meat&&!fish) d.push(/[deh]/.test(f)?'Vegetarian':'Vegan');
+  else if(!meat) d.push('Pescatarian');
+  if(!f.includes('g')) d.push('Gluten-free');
+  if(!f.includes('d')) d.push('Dairy-free');
+  if(!/[np]/.test(f)) d.push('Nut-free');
+  if(!/[kq]/.test(f)) d.push('Halal-friendly');
+  if(prot>=25) d.push('High-protein');
+  return d;
+}
+function buildRecipe(r){
+  const fl=new Set(); let prot=0;
+  r.ings.forEach(x=>{const g=ING[x.id];for(const c of g.fl)fl.add(c);prot+=g.u==='ea'?x.q*g.pr:x.q*g.pr/100});
+  r.f=[...fl].join('');
+  r.prot=Math.round(prot/r.serv);
+  r.diets=dietsOf(r.f,r.prot);
+  return r;
+}
+
+/* Recipe format: R(id,name,cuisines,servings,totalMinutes,level 1-3,art,description,ingredients,steps)
+   ingredient: "catalogId|quantity in catalog unit|display text"; step: "text ~minutes" */
+const BASE_RECIPES=[];
+function R(id,name,cuis,serv,time,lvl,art,desc,ings,steps){
+  BASE_RECIPES.push(buildRecipe({id,name,cuis,serv,time,lvl,art,desc,
+    ings:ings.map(s=>{const [i,q,d]=s.split('|');return {id:i,q:+q,d}}),
+    steps:steps.map(s=>{const m=s.match(/^(.*?)\s*~(\d+)$/);return m?{t:m[1],m:+m[2]}:{t:s,m:0}})}));
+}
+
+R('garlic-chicken-rice-bowl','Garlic Chicken & Rice Bowls',['Asian','Healthy meals'],3,30,1,'bowl',
+ 'Juicy garlic-soy chicken and bright broccoli over fluffy rice. A reliable weeknight bowl.',
+ ['chicken_breast|450|450 g (1 lb) chicken breast, cut in cubes','rice|200|1 cup (200 g) dry white rice','broccoli|300|300 g broccoli, cut in small florets','garlic|4|4 garlic cloves, minced','soy_sauce|45|3 tbsp soy sauce','honey|20|1 tbsp honey','veg_oil|30|2 tbsp vegetable oil','salt|3|½ tsp salt'],
+ ['Rinse the rice, then add it to a pot with 2 cups (480 ml) water and the salt. Bring to a boil, cover, turn the heat to low and cook until the water is absorbed. ~18','While the rice cooks, stir the soy sauce, honey and garlic together in a small bowl. This is your sauce.','Heat the oil in a large pan over medium-high heat. Add the chicken in one layer and cook, stirring now and then, until golden and no pink remains inside. ~8','Add the broccoli and 2 tbsp water, cover, and steam until bright green and just tender. ~4','Pour in the sauce and stir for 1 minute until it coats everything and turns glossy. ~1','Fluff the rice with a fork, divide into bowls and top with the chicken and broccoli.']);
+
+R('veggie-egg-fried-rice','Veggie Egg Fried Rice',['Asian'],3,25,1,'bowl',
+ 'Turn leftover rice and a bag of frozen veg into a takeout-style dinner for pennies.',
+ ['rice|200|1 cup (200 g) dry white rice, or 3 cups cold cooked rice','eggs|3|3 eggs','frozen_veg|300|300 g frozen mixed vegetables','garlic|3|3 garlic cloves, minced','green_onion|20|2 green onions, sliced','soy_sauce|45|3 tbsp soy sauce','veg_oil|30|2 tbsp vegetable oil'],
+ ['Cook the rice in 2 cups (480 ml) water until tender. Spread it on a plate to cool. Cold, dry rice fries best. ~18','Heat 1 tbsp oil in a large pan. Scramble the eggs for 1–2 minutes, then move them to a plate. ~2','Add the remaining oil and the garlic. Stir for 30 seconds, then add the frozen vegetables and cook until hot. ~4','Add the rice, press it flat and let it sit 1 minute so it crisps a little. Stir and repeat once. ~3','Return the eggs to the pan, add the soy sauce and green onions, and toss until everything is evenly coated. ~1']);
+
+R('crispy-tofu-stir-fry','Crispy Tofu Veggie Stir-Fry',['Asian','Healthy meals'],3,35,2,'bowl',
+ 'Golden tofu cubes and crunchy veg in a garlicky ginger-soy sauce. Fully plant-based.',
+ ['tofu|454|1 block (454 g) firm tofu','broccoli|250|250 g broccoli florets','carrot|150|2 carrots, sliced thin','bell_pepper|1|1 bell pepper, sliced','rice|180|¾ cup (180 g) dry white rice','soy_sauce|45|3 tbsp soy sauce','garlic|3|3 garlic cloves, minced','ginger|10|2 tsp grated fresh ginger','veg_oil|30|2 tbsp vegetable oil'],
+ ['Wrap the tofu in paper towels, set a heavy pan on top and let it drain for 10 minutes. Cube it. ~10','Start the rice in 1½ cups (360 ml) water. Bring to a boil, cover and simmer on low. ~18','Heat 1 tbsp oil in a large pan on medium-high. Fry the tofu, turning every couple of minutes, until golden on most sides. Move to a plate. ~8','Add the rest of the oil, garlic and ginger for 30 seconds. Add carrot, broccoli and pepper and stir-fry until crisp-tender. ~5','Return the tofu, pour in the soy sauce with 2 tbsp water and toss for 1 minute. Serve over rice. ~1']);
+
+R('garlic-oil-spaghetti-spinach','Garlic & Olive Oil Spaghetti with Spinach',['Italian','Mediterranean'],3,20,1,'pasta',
+ 'The classic Roman pantry dinner. Five ingredients, one pot, and it still tastes special.',
+ ['pasta|300|300 g spaghetti','olive_oil|60|¼ cup (60 ml) olive oil','garlic|5|5 garlic cloves, thinly sliced','spinach|150|150 g baby spinach','lemon|0.5|½ lemon, juiced','salt|10|1 tbsp salt for the pasta water','pepper|1|¼ tsp black pepper'],
+ ['Boil 3 litres of water with the salt. Cook the spaghetti until just tender, then save ½ cup of the pasta water and drain. ~10','While it cooks, warm the olive oil and garlic in a large pan over low heat. Cook gently until the garlic is pale gold. Do not let it brown. ~3','Add the spinach to the pan and stir until wilted. ~2','Add the spaghetti, a splash of pasta water, lemon juice and pepper. Toss over medium heat until glossy. ~2','Taste, add more salt if needed, and serve right away.']);
+
+R('spaghetti-meat-sauce','Classic Spaghetti & Meat Sauce',['Italian','American'],4,35,1,'pasta',
+ 'A big-batch family-style meat sauce that makes great leftovers.',
+ ['pasta|400|400 g spaghetti','ground_beef|454|454 g (1 lb) lean ground beef','onion|1|1 onion, diced','garlic|3|3 garlic cloves, minced','pasta_sauce|650|1 jar (650 ml) tomato pasta sauce','italian|3|1 tsp Italian seasoning','olive_oil|15|1 tbsp olive oil','salt|3|½ tsp salt','parmesan|20|¼ cup grated parmesan, to serve'],
+ ['Heat the oil in a large pan on medium. Cook the onion until soft. ~5','Add the beef and break it up with a spoon. Cook until browned with no pink left, then add garlic, Italian seasoning and salt. ~7','Pour in the pasta sauce, rinse the jar with a splash of water and add that too. Simmer on low, stirring sometimes. ~12','Meanwhile, boil the spaghetti in well-salted water until tender, then drain. ~10','Serve the sauce over the spaghetti with parmesan on top.']);
+
+R('turkey-bean-chili','One-Pot Turkey & Bean Chili',['American','Mexican'],5,45,1,'soup',
+ 'High-protein, freezer-friendly and nearly impossible to mess up.',
+ ['ground_turkey|454|454 g (1 lb) ground turkey','black_beans|480|2 cans (480 g drained) black beans','diced_tomatoes|796|1 large can (796 ml) diced tomatoes','onion|1|1 onion, diced','bell_pepper|1|1 bell pepper, diced','garlic|3|3 garlic cloves, minced','chili_powder|15|1 tbsp chili powder','cumin|5|2 tsp ground cumin','corn|170|½ can (170 g) corn','veg_oil|15|1 tbsp vegetable oil','salt|5|1 tsp salt'],
+ ['Heat the oil in a big pot over medium. Cook the onion and pepper until soft. ~6','Add the turkey and cook, breaking it up, until no pink remains. ~7','Stir in garlic, chili powder, cumin and salt for 1 minute. ~1','Add the tomatoes, drained beans and corn. Bring to a simmer, then reduce the heat and cook with the lid half on, stirring now and then. ~25','Taste and adjust the salt. It gets better the next day.']);
+
+R('black-bean-quesadillas','Black Bean & Cheese Quesadillas',['Mexican','Fast food alternatives'],3,20,1,'wrap',
+ 'Crispy, melty and ready in 20 minutes. A student classic for good reason.',
+ ['tortillas|6|6 flour tortillas','black_beans|240|1 can (240 g drained) black beans','cheddar|150|1½ cups (150 g) shredded cheddar','salsa|125|½ cup salsa, plus extra to serve','cumin|2|¾ tsp ground cumin','veg_oil|15|1 tbsp vegetable oil'],
+ ['Mash half the beans with a fork. Mix with the whole beans, cumin and salsa.','Lay 3 tortillas flat. Spread with the bean mix, sprinkle with cheese and cover with the other tortillas.','Heat a little oil in a large pan on medium. Cook each quesadilla until golden and the cheese melts, about 3 minutes per side. ~6','Cut into wedges and serve with extra salsa.']);
+
+R('chicken-burrito-bowls','Chicken Burrito Bowls',['Mexican','Healthy meals'],4,35,1,'bowl',
+ 'Everything you love about a burrito shop bowl, cooked at home for a fraction of the price.',
+ ['chicken_breast|500|500 g chicken breast, sliced thin','rice|240|1 cup (240 g) dry white rice','black_beans|240|1 can (240 g drained) black beans','corn|170|½ can (170 g) corn','salsa|190|¾ cup salsa','avocado|1|1 avocado, sliced','lime|1|1 lime','chili_powder|10|2 tsp chili powder','cumin|5|2 tsp ground cumin','veg_oil|15|1 tbsp vegetable oil','salt|3|½ tsp salt'],
+ ['Cook the rice in 2 cups (480 ml) water with a pinch of salt. Bring to a boil, cover and simmer on low. ~18','Toss the chicken with chili powder, cumin and salt.','Heat the oil in a pan on medium-high. Cook the chicken until golden and cooked through. ~8','Warm the beans and corn together in a small pot or in the microwave. ~3','Squeeze lime into the rice. Build bowls with rice, chicken, beans, corn, salsa and avocado.']);
+
+R('coconut-chickpea-curry','Creamy Coconut Chickpea Curry',['Indian','Healthy meals'],4,35,1,'soup',
+ 'Mild, creamy and fully plant-based. Cheap, filling and gluten-free when served over rice.',
+ ['chickpeas|480|2 cans (480 g drained) chickpeas','coconut_milk|400|1 can (400 ml) coconut milk','diced_tomatoes|400|1 cup (400 ml) canned diced tomatoes','onion|1|1 onion, diced','garlic|3|3 garlic cloves, minced','ginger|10|2 tsp grated fresh ginger','curry_powder|15|1 tbsp curry powder','spinach|100|a big handful (100 g) baby spinach','rice|240|1 cup (240 g) dry white rice','veg_oil|15|1 tbsp vegetable oil','salt|3|½ tsp salt'],
+ ['Start the rice in 2 cups (480 ml) water. Bring to a boil, cover and simmer on low. ~18','Heat the oil in a deep pan on medium. Cook the onion until soft, then add garlic, ginger and curry powder for 1 minute. ~7','Add the tomatoes, coconut milk, chickpeas and salt. Simmer gently, stirring now and then, until slightly thickened. ~15','Stir in the spinach until wilted. ~2','Serve over rice.']);
+
+R('red-lentil-dal','Red Lentil Dal',['Indian','Healthy meals'],4,30,1,'soup',
+ 'Red lentils melt into a silky, spiced stew in 20 minutes. Probably the cheapest dinner in the app.',
+ ['lentils|250|1⅓ cups (250 g) dry red lentils','onion|1|1 onion, diced','garlic|3|3 garlic cloves, minced','ginger|10|2 tsp grated fresh ginger','curry_powder|15|1 tbsp curry powder','diced_tomatoes|400|1 cup (400 ml) canned diced tomatoes','rice|240|1 cup (240 g) dry white rice, to serve','veg_oil|15|1 tbsp vegetable oil','lemon|0.5|½ lemon','salt|4|¾ tsp salt'],
+ ['Rinse the lentils in a sieve until the water runs mostly clear.','Heat the oil in a pot on medium. Cook the onion until soft, then add garlic, ginger and curry powder for 1 minute. ~6','Add the lentils, tomatoes, 3 cups (720 ml) water and salt. Bring to a boil, then simmer with the lid slightly open, stirring often, until thick and creamy. ~20','Meanwhile cook the rice in 2 cups (480 ml) water. ~18','Squeeze in the lemon juice, taste and add salt if needed. Serve over rice.']);
+
+R('easy-coconut-chicken-curry','Easy Coconut Chicken Curry',['Indian'],4,40,2,'bowl',
+ 'Tender chicken thighs in a rich, gently spiced coconut sauce.',
+ ['chicken_thigh|600|600 g boneless chicken thighs, cubed','coconut_milk|400|1 can (400 ml) coconut milk','onion|1|1 onion, diced','garlic|3|3 garlic cloves, minced','ginger|10|2 tsp grated fresh ginger','curry_powder|20|4 tsp curry powder','tomato_paste|30|2 tbsp tomato paste','rice|240|1 cup (240 g) dry white rice','veg_oil|15|1 tbsp vegetable oil','salt|4|¾ tsp salt'],
+ ['Start the rice in 2 cups (480 ml) water. Bring to a boil, cover and simmer on low. ~18','Heat the oil in a deep pan on medium-high. Brown the chicken in a single layer for 2 minutes per side. Move to a plate. ~5','Lower the heat to medium. Cook the onion until soft, then add garlic, ginger, curry powder and tomato paste for 1 minute. ~6','Pour in the coconut milk and salt, scraping up the browned bits. Return the chicken. Simmer, partly covered, until the chicken is cooked through and the sauce thickens. Cut one piece open to check there is no pink. ~15','Serve over rice.']);
+
+R('greek-chickpea-salad','Greek Chickpea Salad',['Mediterranean','Healthy meals'],3,15,1,'salad',
+ 'Fresh, crunchy and no cooking at all. Great for packed lunches.',
+ ['chickpeas|480|2 cans (480 g drained) chickpeas, rinsed','cucumber|1|1 cucumber, diced','tomato|250|2 tomatoes, diced','onion|0.5|½ onion, very thinly sliced','feta|100|½ cup (100 g) crumbled feta','olive_oil|45|3 tbsp olive oil','lemon|1|1 lemon, juiced','italian|2|1 tsp dried oregano or Italian seasoning','salt|2|¼ tsp salt'],
+ ['Soak the sliced onion in cold water for 5 minutes to mellow it, then drain. ~5','Whisk the olive oil, lemon juice, oregano and salt in a large bowl.','Add the chickpeas, cucumber, tomato and onion and toss to coat.','Top with feta. Eat now, or chill for up to 2 days.']);
+
+R('easy-shakshuka','Easy Shakshuka',['Middle Eastern','Healthy meals'],3,30,2,'egg',
+ 'Eggs poached in a spiced tomato and pepper sauce. Mop it up with toast.',
+ ['eggs|6|6 eggs','diced_tomatoes|796|1 large can (796 ml) diced tomatoes','onion|1|1 onion, diced','bell_pepper|1|1 bell pepper, diced','garlic|3|3 garlic cloves, minced','cumin|5|2 tsp ground cumin','paprika|5|2 tsp smoked paprika','olive_oil|30|2 tbsp olive oil','salt|3|½ tsp salt','bread|3|3 slices bread, toasted, to serve'],
+ ['Heat the oil in a wide pan on medium. Cook the onion and pepper until soft. ~7','Stir in garlic, cumin and paprika for 1 minute. ~1','Add the tomatoes and salt. Simmer until thickened. ~10','Make 6 little wells in the sauce with a spoon and crack an egg into each. Cover and cook on low until the whites are set. The yolks can stay soft. ~6','Serve straight from the pan with toast.']);
+
+R('lemon-chicken-couscous','Lemon Herb Chicken with Couscous',['Mediterranean','Healthy meals'],3,30,2,'bowl',
+ 'Bright lemony chicken with zucchini and fluffy couscous. Ready in half an hour.',
+ ['chicken_breast|450|450 g chicken breast, sliced into strips','couscous|200|1 cup (200 g) couscous','broth|250|1 cup (250 ml) vegetable broth','zucchini|200|1 zucchini, diced','lemon|1|1 lemon, zest and juice','garlic|3|3 garlic cloves, minced','italian|5|2 tsp Italian seasoning','olive_oil|30|2 tbsp olive oil','salt|3|½ tsp salt'],
+ ['Toss the chicken with half the lemon juice, the Italian seasoning, garlic and salt.','Heat the oil in a large pan on medium-high. Cook the chicken until golden and cooked through. ~8','Add the zucchini and cook until just tender. ~4','Meanwhile, bring the broth to a boil, stir in the couscous, cover, take off the heat and rest for 5 minutes. Fluff with a fork. ~6','Mix the lemon zest and remaining juice into the couscous. Serve the chicken and zucchini on top.']);
+
+R('spiced-chickpea-rice','Spiced Chickpea & Rice Plate',['Middle Eastern','Healthy meals'],3,30,1,'bowl',
+ 'Warm cumin-and-paprika chickpeas over rice with cool cucumber. Plant-based and budget-friendly.',
+ ['chickpeas|480|2 cans (480 g drained) chickpeas','rice|200|1 cup (200 g) dry white rice','onion|1|1 onion, diced','garlic|3|3 garlic cloves, minced','cumin|5|2 tsp ground cumin','paprika|5|2 tsp smoked paprika','olive_oil|30|2 tbsp olive oil','lemon|0.5|½ lemon','cucumber|1|1 cucumber, diced','salt|3|½ tsp salt'],
+ ['Cook the rice in 2 cups (480 ml) water until tender. ~18','Heat the oil in a pan on medium. Cook the onion until golden. ~7','Add garlic, cumin and paprika for 1 minute, then the drained chickpeas and salt. Cook until hot and a little crisp at the edges. ~7','Squeeze in the lemon. Serve over rice with the cucumber on the side.']);
+
+R('lemon-tuna-pasta','Lemon Tuna Pasta',['Italian','Mediterranean'],3,20,1,'pasta',
+ 'Pantry-staple pasta with lemon, garlic and spinach. Protein-rich and very cheap.',
+ ['pasta|300|300 g spaghetti','tuna|340|2 cans (340 g) tuna, drained','lemon|1|1 lemon, zest and juice','garlic|2|2 garlic cloves, minced','olive_oil|30|2 tbsp olive oil','spinach|60|2 big handfuls (60 g) baby spinach','salt|8|2 tsp salt for the pasta water','pepper|1|¼ tsp black pepper','parmesan|20|¼ cup grated parmesan'],
+ ['Boil the spaghetti in salted water until tender. Save ½ cup pasta water, then drain. ~10','In a large pan, warm the oil and garlic on low for 1 minute. ~1','Add the spinach, tuna, lemon zest and juice and stir until the spinach wilts. ~2','Add the pasta and a splash of pasta water and toss. Finish with pepper and parmesan. ~2']);
+
+R('sheet-pan-salmon','Sheet-Pan Salmon, Potatoes & Broccoli',['Healthy meals','American'],2,35,1,'bake',
+ 'A full dinner on one pan with almost no cleanup. Omega-3-rich and a little treat.',
+ ['salmon|300|2 salmon fillets (300 g)','potato|450|450 g potatoes, cut in small cubes','broccoli|250|250 g broccoli florets','olive_oil|30|2 tbsp olive oil','lemon|0.5|½ lemon','garlic|2|2 garlic cloves, minced','paprika|3|1 tsp smoked paprika','salt|3|½ tsp salt','pepper|1|¼ tsp black pepper'],
+ ['Heat the oven to 220°C (425°F). Toss the potatoes with half the oil, half the salt and the paprika on a large baking sheet. Roast. ~15','Toss the broccoli with the rest of the oil and garlic. Push the potatoes aside and add the broccoli to the pan.','Pat the salmon dry and season with remaining salt and pepper. Nestle on the pan. Roast until the salmon flakes easily and the potatoes are golden. ~12','Squeeze lemon over everything and serve.']);
+
+R('veggie-omelette-toast','Veggie Omelette & Toast',['American','Healthy meals'],2,15,1,'egg',
+ 'Fast, high-protein and works for breakfast, lunch or dinner.',
+ ['eggs|4|4 eggs','mushrooms|100|100 g mushrooms, sliced','bell_pepper|0.5|½ bell pepper, diced','cheddar|40|⅓ cup (40 g) shredded cheddar','butter|10|2 tsp butter','bread|4|4 slices bread','salt|2|¼ tsp salt','pepper|1|pinch of black pepper'],
+ ['Whisk the eggs with salt and pepper.','Melt half the butter in a nonstick pan on medium. Cook the mushrooms and pepper until soft, then move to a plate. ~4','Melt the remaining butter and pour in the eggs. As they set, gently pull the edges toward the centre so uncooked egg flows underneath. ~3','Add the veg and cheese to one half, fold over and slide onto a plate. Serve with toast. ~2']);
+
+R('pb-banana-oatmeal','Peanut Butter Banana Oatmeal',['American','Healthy meals'],2,10,1,'bowl',
+ 'Creamy oats with peanut butter and banana. It keeps you full all morning for under a dollar.',
+ ['oats|90|1 cup (90 g) rolled oats','milk|500|2 cups (500 ml) milk','banana|2|2 bananas, sliced','peanut_butter|32|2 tbsp peanut butter','honey|15|1 tbsp honey'],
+ ['Add the oats and milk to a small pot and bring to a gentle simmer on medium. ~2','Cook, stirring often, until thick and creamy. ~5','Stir in half the peanut butter. Divide between bowls and top with banana, the rest of the peanut butter and a drizzle of honey. ~1']);
+
+R('chicken-caesar-wraps','Chicken Caesar Wraps',['Fast food alternatives','American'],3,25,1,'wrap',
+ 'A better-than-the-drive-thru lunch you can pack and eat cold.',
+ ['chicken_breast|350|350 g chicken breast, sliced thin','tortillas|3|3 large flour tortillas','romaine|170|half a pack (170 g) romaine, chopped','caesar_dressing|60|¼ cup Caesar dressing','parmesan|25|¼ cup grated parmesan','olive_oil|15|1 tbsp olive oil','salt|2|¼ tsp salt','pepper|1|¼ tsp black pepper'],
+ ['Season the chicken with salt and pepper.','Heat the oil in a pan on medium-high. Cook the chicken until golden and cooked through. ~8','Toss the romaine with the dressing and half the parmesan.','Warm the tortillas for 20 seconds per side. Fill with lettuce and chicken, sprinkle with the remaining parmesan and roll tightly. ~2','Cut each wrap in half to serve.']);
+
+R('smash-burger-bowls','Smash Burger Bowls',['Fast food alternatives','American'],3,35,1,'bowl',
+ 'Burger-night flavours without the buns: seasoned beef, crispy potato wedges and a crunchy salad.',
+ ['ground_beef|454|454 g (1 lb) lean ground beef','potato|450|450 g potatoes, cut in wedges','romaine|170|half a pack (170 g) romaine, chopped','tomato|200|1–2 tomatoes, diced','onion|0.5|½ onion, diced','cheddar|75|¾ cup (75 g) shredded cheddar','veg_oil|30|2 tbsp vegetable oil','paprika|3|1 tsp smoked paprika','salt|4|¾ tsp salt'],
+ ['Heat the oven to 220°C (425°F). Toss the potato wedges with half the oil, paprika and half the salt. Roast, flipping once. ~25','Shape the beef into 6 thin patties and season with the remaining salt.','Heat the remaining oil in a pan on high. Cook the patties 2–3 minutes per side until browned and cooked through, topping with cheese in the last minute. ~6','Build bowls with lettuce, tomato, onion, wedges and chopped patties.']);
+
+R('sheet-pan-chicken-veg','Sheet-Pan Chicken & Veggies',['Healthy meals','American'],4,40,1,'bake',
+ 'Toss everything on a tray, roast and you are done. Easy meal-prep for the week.',
+ ['chicken_thigh|600|600 g boneless chicken thighs','sweet_potato|450|450 g sweet potatoes, cubed','broccoli|300|300 g broccoli florets','carrot|200|2–3 carrots, sliced','olive_oil|45|3 tbsp olive oil','paprika|5|2 tsp smoked paprika','garlic|3|3 garlic cloves, minced','salt|4|¾ tsp salt','pepper|1|¼ tsp black pepper'],
+ ['Heat the oven to 220°C (425°F). Toss the sweet potato and carrot with half the oil and half the salt on a large tray. Roast. ~10','Toss the chicken with the remaining oil, paprika, garlic, salt and pepper.','Add the chicken and broccoli to the tray. Roast until the chicken reaches 74°C (165°F) or the juices run clear. ~25','Rest for 5 minutes before serving.']);
+
+R('naan-flatbread-pizzas','Naan Flatbread Pizzas',['Italian','Fast food alternatives'],4,20,1,'pizza',
+ 'Crispy naan as a speedy pizza base. Much cheaper than delivery and ready faster.',
+ ['naan|4|4 naan breads','pasta_sauce|180|¾ cup (180 ml) tomato pasta sauce','mozzarella|200|2 cups (200 g) shredded mozzarella','bell_pepper|1|1 bell pepper, sliced thin','mushrooms|100|100 g mushrooms, sliced','italian|3|1 tsp Italian seasoning','olive_oil|10|2 tsp olive oil'],
+ ['Heat the oven to 220°C (425°F). Put the naan on a lined baking sheet and brush with oil.','Spread each with sauce, then add cheese, pepper, mushrooms and Italian seasoning.','Bake until the cheese is bubbling and the edges are crisp. ~9','Rest 2 minutes, then slice. ~2']);
+
+R('loaded-baked-potatoes','Loaded Baked Potatoes',['American'],3,60,1,'bake',
+ 'Fluffy potatoes topped with cheese, broccoli and creamy yogurt. Cozy and filling.',
+ ['potato|900|3 large potatoes (900 g)','cheddar|100|1 cup (100 g) shredded cheddar','broccoli|200|200 g broccoli, small florets','yogurt|100|½ cup (100 g) plain Greek yogurt','green_onion|20|2 green onions, sliced','olive_oil|10|2 tsp olive oil','salt|4|¾ tsp salt'],
+ ['Heat the oven to 200°C (400°F). Scrub the potatoes, prick them all over with a fork, rub with oil and salt, and bake directly on the rack. ~50','About 5 minutes before they finish, steam or microwave the broccoli with a splash of water until tender. ~4','Slice each potato open and fluff the inside with a fork.','Top with cheese, broccoli, a spoonful of yogurt and green onions.']);
+
+R('cheesy-broccoli-pasta','Cheesy Broccoli Pasta',['American','Fast food alternatives'],4,30,2,'pasta',
+ 'A from-scratch cheese sauce that beats the boxed stuff. Broccoli is hidden in plain sight.',
+ ['pasta|300|300 g spaghetti, broken in halves','broccoli|250|250 g broccoli, small florets','milk|500|2 cups (500 ml) milk','butter|30|2 tbsp butter','flour|30|¼ cup (30 g) flour','cheddar|200|2 cups (200 g) shredded cheddar','salt|5|1 tsp salt'],
+ ['Boil the pasta in salted water. Add the broccoli for the last 2 minutes, then drain both. ~10','In the same pot, melt the butter on medium. Whisk in the flour and cook for 1 minute. ~2','Slowly pour in the milk while whisking. Cook, stirring, until it coats the back of a spoon. ~5','Turn the heat off. Stir in the cheese until smooth and season with salt.','Add the pasta and broccoli back in and stir to coat.']);
+
+R('lentil-carrot-soup','Hearty Lentil & Carrot Soup',['Mediterranean','Healthy meals'],4,40,1,'soup',
+ 'Warming, thick and cheap. Make a pot on Sunday and eat all week.',
+ ['lentils|200|1 cup (200 g) dry red lentils','carrot|300|3 carrots, diced','onion|1|1 onion, diced','garlic|3|3 garlic cloves, minced','broth|900|1 carton (900 ml) vegetable broth','cumin|5|2 tsp ground cumin','lemon|0.5|½ lemon','olive_oil|30|2 tbsp olive oil','salt|4|¾ tsp salt'],
+ ['Heat the oil in a large pot on medium. Cook the onion and carrots until the onion is soft. ~8','Add garlic and cumin for 1 minute. ~1','Add the rinsed lentils, broth and 2 cups (480 ml) water. Bring to a boil, then simmer until the lentils and carrots are very soft. ~22','Blend part of the soup with a blender or mash with a potato masher for a thicker texture.','Stir in lemon juice and salt to taste.']);
+
+R('tomato-soup-grilled-cheese','Tomato Soup & Grilled Cheese',['American'],3,30,1,'soup',
+ 'A rainy-day classic made with a can of tomatoes and a hot pan.',
+ ['diced_tomatoes|796|1 large can (796 ml) diced tomatoes','onion|1|1 onion, diced','garlic|2|2 garlic cloves, minced','broth|250|1 cup (250 ml) vegetable broth','butter|30|2 tbsp butter, divided','bread|6|6 slices bread','cheddar|150|1½ cups (150 g) shredded cheddar','salt|3|½ tsp salt','pepper|1|¼ tsp black pepper'],
+ ['Melt 1 tbsp butter in a pot on medium. Cook the onion until soft, then add garlic for 30 seconds. ~6','Add tomatoes, broth, salt and pepper. Simmer. ~12','Blend until smooth with a blender, or mash well with a potato masher for a rustic soup.','Butter one side of each bread slice with the remaining butter. Fill with cheese, buttered side out, and toast in a pan on medium-low until golden and melted. ~8','Serve the sandwiches with the soup for dipping.']);
+
+R('garlic-shrimp-noodles','Garlic Shrimp Noodles',['Asian'],3,20,2,'pasta',
+ 'Buttery garlic shrimp tossed with noodles and vegetables. Restaurant flavour in 20 minutes.',
+ ['shrimp|340|340 g peeled frozen shrimp, thawed','noodles|250|250 g wheat noodles','frozen_veg|150|1 cup (150 g) frozen mixed vegetables','garlic|5|5 garlic cloves, minced','soy_sauce|30|2 tbsp soy sauce','butter|30|2 tbsp butter','green_onion|20|2 green onions, sliced','lime|1|1 lime'],
+ ['Cook the noodles according to the package. Drain. ~6','Melt the butter in a large pan on medium-high. Add the shrimp and cook until pink and curled, about 2 minutes per side. Move to a plate. ~4','In the same pan, cook the garlic for 30 seconds, then add the vegetables for 3 minutes. ~4','Add the noodles, soy sauce and shrimp and toss well. ~1','Top with green onions and a squeeze of lime.']);
+
+R('peanut-noodles','Peanut Noodles with Veggies',['Asian'],3,20,1,'pasta',
+ 'Creamy, nutty and totally plant-based. Delicious warm or cold.',
+ ['noodles|250|250 g wheat noodles','peanut_butter|60|¼ cup (60 g) peanut butter','soy_sauce|45|3 tbsp soy sauce','lime|1|1 lime, juiced','garlic|2|2 garlic cloves, minced','carrot|100|1 large carrot, grated','cucumber|1|1 cucumber, sliced into half-moons','ginger|5|1 tsp grated fresh ginger'],
+ ['Cook the noodles according to the package. Drain. ~6','Whisk the peanut butter, soy sauce, lime juice, garlic, ginger and 3–4 tbsp warm water until smooth and pourable.','Toss the noodles with the sauce, carrot and cucumber.','Taste and add more lime or soy sauce if you like.']);
+
+R('sweet-potato-black-bean-tacos','Sweet Potato & Black Bean Tacos',['Mexican','Healthy meals'],3,35,1,'wrap',
+ 'Smoky roasted sweet potato and black beans in warm tortillas. Plant-based and satisfying.',
+ ['tortillas|6|6 flour tortillas','sweet_potato|450|450 g sweet potatoes, small cubes','black_beans|240|1 can (240 g drained) black beans','avocado|1|1 avocado, sliced','lime|1|1 lime','cumin|5|2 tsp ground cumin','chili_powder|5|2 tsp chili powder','olive_oil|15|1 tbsp olive oil','salsa|125|½ cup salsa','salt|3|½ tsp salt'],
+ ['Heat the oven to 220°C (425°F). Toss the sweet potato with oil, cumin, chili powder and salt on a baking sheet. Roast, stirring once. ~25','Warm the beans in a small pot. Mash a few for a thicker filling. ~3','Warm the tortillas in a dry pan for 20 seconds per side.','Fill with sweet potato, beans, avocado and salsa and finish with lime juice.']);
+
+R('bacon-egg-spaghetti','Bacon & Egg Spaghetti',['Italian'],3,25,2,'pasta',
+ 'A cheater carbonara: silky egg-and-cheese sauce, crispy bacon, nothing else needed.',
+ ['pasta|300|300 g spaghetti','bacon|150|150 g bacon, chopped','eggs|3|3 eggs','parmesan|50|½ cup (50 g) grated parmesan','garlic|2|2 garlic cloves, minced','pepper|2|½ tsp black pepper','salt|8|2 tsp salt for the pasta water'],
+ ['Boil the spaghetti in salted water. Save 1 cup of pasta water, then drain. ~10','Cook the bacon in a large pan on medium until crisp. Add the garlic for 30 seconds. ~7','Whisk the eggs, parmesan and pepper in a bowl.','Take the pan off the heat. Add the hot pasta, then the egg mix and toss quickly, adding splashes of pasta water until creamy. The heat from the pasta cooks the eggs. ~2','Serve immediately with extra pepper.']);
+
+R('chicken-shawarma-bowls','Chicken Shawarma Bowls',['Middle Eastern'],4,40,2,'bowl',
+ 'Warmly spiced chicken, rice, fresh veg and garlicky yogurt sauce.',
+ ['chicken_thigh|600|600 g boneless chicken thighs, sliced','rice|240|1 cup (240 g) dry white rice','cucumber|1|1 cucumber, diced','tomato|250|2 tomatoes, diced','yogurt|150|⅔ cup (150 g) plain Greek yogurt','garlic|3|3 garlic cloves, minced','cumin|5|2 tsp ground cumin','paprika|5|2 tsp smoked paprika','curry_powder|5|1 tsp curry powder','lemon|1|1 lemon','olive_oil|30|2 tbsp olive oil','salt|4|¾ tsp salt'],
+ ['Mix the cumin, paprika, curry powder, half the garlic, half the lemon juice, 1 tbsp oil and half the salt. Toss with the chicken and marinate while the rice cooks. ~10','Cook the rice in 2 cups (480 ml) water. ~18','Stir the yogurt with the remaining garlic, lemon juice and salt for the sauce.','Heat the remaining oil in a large pan on medium-high. Cook the chicken until browned and cooked through. ~10','Build bowls with rice, chicken, cucumber, tomato and a big spoon of sauce.']);
+
+R('roasted-veggie-quinoa-bowl','Roasted Veggie Quinoa Bowl',['Healthy meals','Mediterranean'],3,40,1,'bowl',
+ 'Nutty quinoa, roasted veg and crispy chickpeas with a lemon dressing. Plant-based and gluten-free.',
+ ['quinoa|180|1 cup (180 g) quinoa, rinsed','sweet_potato|300|300 g sweet potato, cubed','zucchini|200|1 zucchini, sliced','chickpeas|240|1 can (240 g drained) chickpeas','spinach|60|2 big handfuls (60 g) baby spinach','olive_oil|30|2 tbsp olive oil','lemon|1|1 lemon','cumin|3|1 tsp ground cumin','salt|3|½ tsp salt'],
+ ['Heat the oven to 220°C (425°F). Toss the sweet potato, zucchini and dried chickpeas with half the oil, cumin and half the salt. Roast. ~25','Cook the quinoa in 2 cups (480 ml) water. Bring to a boil, cover and simmer on low, then rest off the heat for 5 minutes. ~20','Whisk the remaining oil with the lemon juice and salt.','Fluff the quinoa, fold in the spinach so it wilts, then top with the roasted veg and dressing.']);
+
+R('spinach-mushroom-frittata','Spinach & Mushroom Frittata',['Healthy meals','Mediterranean'],4,30,2,'egg',
+ 'Fluffy, protein-packed and perfect cold the next day. Gluten-free and low-carb.',
+ ['eggs|8|8 eggs','spinach|120|120 g baby spinach','mushrooms|150|150 g mushrooms, sliced','onion|0.5|½ onion, diced','feta|60|⅓ cup (60 g) crumbled feta','olive_oil|15|1 tbsp olive oil','salt|3|½ tsp salt','pepper|1|¼ tsp black pepper'],
+ ['Heat the oven to 190°C (375°F). Whisk the eggs with salt and pepper.','Heat the oil in an oven-safe pan on medium. Cook the onion and mushrooms until golden. ~7','Add the spinach and stir until wilted. ~2','Pour in the eggs and scatter the feta on top. Cook without stirring until the edges set. ~3','Transfer to the oven and bake until the centre is set. ~12','Rest for 5 minutes, then slice into wedges.']);
+
+R('honey-soy-chicken-thighs','Honey Soy Chicken Thighs',['Asian'],4,35,1,'bake',
+ 'Sticky, sweet-salty roasted chicken with rice and broccoli. A dependable crowd pleaser.',
+ ['chicken_thigh|700|700 g boneless chicken thighs','soy_sauce|60|¼ cup (60 ml) soy sauce','honey|40|2 tbsp honey','garlic|4|4 garlic cloves, minced','ginger|10|2 tsp grated fresh ginger','rice|240|1 cup (240 g) dry white rice','broccoli|300|300 g broccoli florets','veg_oil|15|1 tbsp vegetable oil'],
+ ['Heat the oven to 220°C (425°F). Whisk the soy sauce, honey, garlic and ginger. Coat the chicken in half of it and let it sit.','Cook the rice in 2 cups (480 ml) water. ~18','Place the chicken on an oiled tray. Roast until browned and the juices run clear, brushing with the remaining sauce halfway. ~22','Steam the broccoli or microwave with a splash of water until tender. ~4','Slice the chicken, pour the pan juices over it and serve with rice and broccoli.']);
+
+const BASE_IDS=new Set(BASE_RECIPES.map(r=>r.id));
+
+/* ================= STATE ================= */
+const LSK='growrecipes.v2', ACCK='growrecipes.accounts.v2';
+const lsGet=k=>{try{return JSON.parse(localStorage.getItem(k))}catch{return null}};
+const lsSet=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
+const freshProfile=()=>({name:'',email:'',diet:[],cuisines:[],allergies:[],avoid:[],budget:'5-10',custom:'',locText:'',lat:null,lng:null,stores:[],exp:'Beginner',time:'30'});
+const freshState=()=>({onboarded:false,step:0,prof:freshProfile(),favs:[],seen:[],rec:{ids:null,note:''},gen:[],checks:{},shop:{},chat:[],ctx:null,cmode:'pack',cmpOpen:{}});
+let S=(()=>{const base=freshState(),sv=lsGet(LSK);if(!sv)return base;const m=Object.assign(base,sv);m.prof=Object.assign(freshProfile(),sv.prof||{});return m})();
+function save(){lsSet(LSK,S);if(S.prof.email){const a=lsGet(ACCK)||{};a[S.prof.email.toLowerCase()]=S;lsSet(ACCK,a)}}
+const U={q:'',loading:false,fCuisine:'All',fTime:'any',fCost:'any',fSort:'match',fProtein:false,favQ:'',favC:'All',busy:false,aiOn:null,genBusy:false,modal:null};
+
+/* ================= PRICES =================
+   PriceProvider is the single seam for real grocery data. Swap `offers` for an
+   API-backed implementation that returns the same shape and nothing else changes. */
+const STORE_NAME=Object.fromEntries(STORES.map(s=>[s.id,s.name]));
+const STORE_ADJ={
+  walmart:{Produce:1,'Meat & seafood':.96,Fridge:.97,'Grains & bread':.95,Pantry:.93,Frozen:.98},
+  nofrills:{Produce:.97,'Meat & seafood':.97,Fridge:.94,'Grains & bread':.92,Pantry:.95,Frozen:.95},
+  freshco:{Produce:.92,'Meat & seafood':1.02,Fridge:1,'Grains & bread':1.03,Pantry:1.02,Frozen:1},
+  foodbasics:{Produce:.95,'Meat & seafood':1,Fridge:.99,'Grains & bread':.98,Pantry:.98,Frozen:.97},
+  metro:{},loblaws:{}
+};
+const STORE_FLAT={metro:1.08,loblaws:1.12};
+const COSTCO_MULT={Produce:2,'Meat & seafood':3,Fridge:2,'Grains & bread':3,Pantry:3,Frozen:2};
+function pkgLabel(ing,size){
+  const t=n=>+(n).toFixed(2);
+  if(ing.u==='g')return size>=1000?t(size/1000)+' kg':size+' g';
+  if(ing.u==='ml')return size>=1000?t(size/1000)+' L':size+' ml';
+  return size+' '+ing.lab;
+}
+const PriceProvider={
+  label:'Sample prices (demo data)',
+  live:false,
+  offer(ing,sid){
+    if(['costco','metro','loblaws','freshco'].includes(sid)&&hash('stock|'+ing.id+sid)<.07)return null;
+    const noise=1+(hash('n|'+ing.id+sid)-.5)*.34;
+    let size=ing.size,price;
+    if(sid==='costco'){const m=ing.staple?4:(COSTCO_MULT[ing.cat]||2);size=ing.size*m;price=ing.price*m*.8*noise}
+    else price=ing.price*(STORE_ADJ[sid][ing.cat]??STORE_FLAT[sid]??1)*noise;
+    price=Math.max(.49,Math.round(price*10)/10-.01);
+    return {store:sid,price,size,pkg:pkgLabel(ing,size),perUnit:price/size};
+  },
+  offers(ingId,storeIds){
+    const ing=ING[ingId];
+    let list=storeIds.map(s=>this.offer(ing,s)).filter(Boolean),fb=false;
+    if(!list.length){list=STORES.map(s=>this.offer(ing,s.id)).filter(Boolean);fb=true}
+    list.fb=fb;return list;
+  }
+};
+const activeStores=()=>{const s=STORES.map(x=>x.id).filter(id=>S.prof.stores.includes(id));return s.length?s:DEFAULT_STORES};
+
+const median=a=>{const s=[...a].sort((x,y)=>x-y),m=s.length>>1;return s.length%2?s[m]:(s[m-1]+s[m])/2};
+const _est=new Map();
+function estimate(r){
+  const st=activeStores(),key=r.id+'|'+st.join(',');
+  if(_est.has(key))return _est.get(key);
+  let used=0,pkg=0;
+  const lines=r.ings.map(x=>{const off=PriceProvider.offers(x.id,st);const u=avg(off.map(o=>o.perUnit*x.q)),p=median(off.map(o=>o.price));used+=u;pkg+=p;return {x,used:u,pkg:p}});
+  const out={used,pkg,perServ:used/r.serv,lines};_est.set(key,out);return out;
+}
+function compare(r,mode){
+  const st=activeStores();
+  const rows=r.ings.map(x=>{
+    const ing=ING[x.id],off=PriceProvider.offers(x.id,st);
+    const list=off.map(o=>({...o,used:o.perUnit*x.q,val:mode==='used'?o.perUnit*x.q:o.price}))
+      .sort((a,b)=>a.val-b.val||st.indexOf(a.store)-st.indexOf(b.store));
+    const comparable=mode==='used'?list:list.filter(o=>o.size===ing.size),best=list[0],mean=avg((comparable.length?comparable:list).map(o=>o.val));
+    return {x,ing,list,best,mean,save:Math.max(0,mean-best.val),fb:off.fb};
+  });
+  const total=rows.reduce((s,w)=>s+w.best.val,0),typical=rows.reduce((s,w)=>s+w.mean,0);
+  const singles=st.map(sid=>{let t=0,ok=true;rows.forEach(w=>{const o=w.list.find(o=>o.store===sid);if(!o)ok=false;else t+=o.val});return ok?{store:sid,total:t}:null}).filter(Boolean).sort((a,b)=>a.total-b.total);
+  return {rows,total,typical,save:Math.max(0,typical-total),singles,stops:new Set(rows.map(w=>w.best.store)).size,
+    checkout:rows.reduce((s,w)=>s+w.best.price,0),usedTotal:rows.reduce((s,w)=>s+w.best.used,0),stores:st,
+    anyFallback:rows.some(w=>w.fb)};
+}
+
+/* ================= RECIPE POOL / RECOMMENDATIONS ================= */
+const allRecipes=()=>BASE_RECIPES.concat(S.gen);
+const recipeById=id=>allRecipes().find(r=>r.id===id);
+function flagsAllowed(f){
+  const p=S.prof;
+  for(const a of p.allergies){const c=ALLERGY[a];if(c&&f.includes(c))return false}
+  for(const d of p.diet){const fn=DIET_OK[d];if(fn&&!fn(f))return false}
+  return true;
+}
+function allowed(r){
+  if(!flagsAllowed(r.f))return false;
+  const kw=S.prof.avoid.map(s=>s.toLowerCase().trim()).filter(Boolean);
+  if(kw.length){const hay=(r.name+' '+r.ings.map(x=>ING[x.id].name+' '+x.d).join(' ')).toLowerCase();if(kw.some(k=>hay.includes(k)))return false}
+  return true;
+}
+const BUDGETS={'u5':{label:'Under $5',sub:'per serving',cap:5},'5-10':{label:'$5–$10',sub:'per serving',cap:10},'10-15':{label:'$10–$15',sub:'per serving',cap:15},'15+':{label:'$15+',sub:'per serving',cap:Infinity}};
+function budgetCap(){const p=S.prof;if(p.budget==='custom'){const v=parseFloat(p.custom);return v>0?v:Infinity}return BUDGETS[p.budget]?.cap??Infinity}
+const budgetLabel=()=>S.prof.budget==='custom'?(parseFloat(S.prof.custom)>0?'Up to '+money(parseFloat(S.prof.custom))+' per serving':'Custom'):BUDGETS[S.prof.budget].label+' per serving';
+const TIMES={'15':{label:'Under 15 minutes',max:15},'30':{label:'15–30 minutes',max:30},'45':{label:'30–45 minutes',max:45},'60':{label:'45+ minutes',max:999}};
+const EXP={Beginner:1,Intermediate:2,Advanced:3};
+function scoreRecipe(r){
+  const p=S.prof;let s=0;
+  if(r.cuis.some(c=>p.cuisines.includes(c)))s+=3;
+  const tm=TIMES[p.time]?.max??999;
+  s+=r.time<=tm?1:-Math.min(3,(r.time-tm)/10);
+  const ex=EXP[p.exp]||1;s-=Math.max(0,r.lvl-ex)*2;
+  if(p.diet.includes('High-protein')&&r.prot>=25)s+=2;
+  const cap=budgetCap();if(isFinite(cap))s+=Math.max(0,1-estimate(r).perServ/cap);
+  return s;
+}
+function eligible(relax=1){
+  const cap=budgetCap();
+  return allRecipes().filter(r=>allowed(r)&&(estimate(r).perServ<=cap*relax));
+}
+function basePool(){
+  let pool=eligible(1);
+  if(pool.length<6)pool=eligible(1.3);
+  if(pool.length<6)pool=eligible(Infinity);
+  return pool;
+}
+function weightedPick(list,k){
+  return list.map(r=>({r,s:scoreRecipe(r)+Math.random()*2.4})).sort((a,b)=>b.s-a.s).slice(0,k).map(x=>x.r);
+}
+async function buildRecs(n=6,fresh=false){
+  let pool=basePool(),unseen=pool.filter(r=>!S.seen.includes(r.id));
+  let note='';
+  if(fresh&&unseen.length<n&&AI.available()){
+    U.genBusy=true;
+    try{const k=await aiGenerate(4);if(k)note='GrowAI created '+k+' new recipe'+(k>1?'s':'')+' for you.'}catch(e){}
+    U.genBusy=false;
+    pool=basePool();unseen=pool.filter(r=>!S.seen.includes(r.id));
+  }
+  let pick=weightedPick(unseen,Math.min(n,unseen.length));
+  if(pick.length<n){
+    const keep=new Set(pick.map(r=>r.id).concat(S.rec.ids||[]));
+    pick=pick.concat(weightedPick(pool.filter(r=>!keep.has(r.id)),n-pick.length));
+    if(pick.length<n){const have=new Set(pick.map(r=>r.id));pick=pick.concat(weightedPick(pool.filter(r=>!have.has(r.id)),n-pick.length))}
+    if(unseen.length===0)S.seen=[];
+    note=note||'You have seen every recipe that matches your settings, so we are starting a fresh round.';
+  }
+  S.seen=Array.from(new Set(S.seen.concat(pick.map(r=>r.id))));
+  S.rec={ids:pick.map(r=>r.id),note};
+  save();
+  return pick;
+}
+
+/* ================= GrowAI (live via sample, with offline fallback) ================= */
+const AI={
+  sample:null,
+  available(){return !!this.sample&&U.aiOn!==false},
+  async init(){try{if(window.claude&&window.claude.use)this.sample=await window.claude.use('sample')}catch{this.sample=null}}
+};
+function profileSummary(){
+  const p=S.prof;
+  return {dietary_restrictions:p.diet,allergies_STRICT_never_include:p.allergies,also_avoid:p.avoid,favourite_cuisines:p.cuisines,
+    budget:budgetLabel(),cooking_experience:p.exp,time_available:TIMES[p.time]?.label,stores:activeStores().map(s=>STORE_NAME[s])};
+}
+function recipeSummary(r){
+  const e=estimate(r);
+  return `Recipe the user is viewing: "${r.name}" (serves ${r.serv}, ${r.time} min, ${['','beginner','intermediate','advanced'][r.lvl]}). Estimated cost of amounts used ${money(e.used)} (${money(e.perServ)} per serving, sample prices).
+Ingredients: ${r.ings.map(x=>x.d).join('; ')}.
+Steps: ${r.steps.map((s,i)=>(i+1)+'. '+s.t).join(' ')}`;
+}
+const CHAT_RULES=`You are GrowAI, the friendly cooking assistant inside GrowRecipes, a meal-planning app for university and college students.
+Give practical, easy-to-follow answers. Keep replies short (about 60-150 words) unless asked for detail. Plain language, no jargon. Give metric and imperial when you give amounts or temperatures.
+The user's allergies are STRICT: never suggest an ingredient that contains any of them, and respect every dietary restriction listed. If a swap changes the result, say how in one short line.
+Prefer cheap, easy-to-find ingredients. Do not invent grocery prices or claim live store data. The app's prices are sample demo prices and the app has a "Find cheapest ingredients" button on recipe pages.
+Food safety matters: mention safe cooking temperatures when relevant (chicken 74°C / 165°F).
+Format: short paragraphs or "- " bullet lists. Use **bold** sparingly for key words. No headings, no tables.`;
+async function askAI(turns,onText,signal){
+  const ctxR=S.ctx?recipeById(S.ctx):null;
+  const intro=CHAT_RULES+'\n\nUser profile (JSON): '+JSON.stringify(profileSummary())+(ctxR?'\n\n'+recipeSummary(ctxR):'\n\nThe user is not viewing a specific recipe.');
+  const hist=turns.slice(-10).map(m=>({role:m.role,content:m.text}));
+  while(hist.length&&hist[0].role!=='user')hist.shift();
+  const r=await AI.sample([{role:'user',content:intro+'\n\nThe conversation follows. Reply to the last user message.'},...hist],{cache:false,modelTier:'quick',signal,onText:({text})=>onText(text)});
+  return r.text;
+}
+
+async function aiGenerate(n=4){
+  if(!AI.sample)return 0;
+  const p=S.prof,cap=budgetCap(),tm=TIMES[p.time]?.max??999;
+  const catalog=Object.values(ING).map(i=>`${i.id} (${i.name}; ${i.u}${i.fl?'; flags '+i.fl:''})`).join(', ');
+  const names=allRecipes().map(r=>r.name).join('; ');
+  const prompt=`You are the recipe engine inside GrowRecipes, a meal-planning app for students. Create ${n} NEW recipes.
+Use ONLY these ingredient ids, with quantities in the unit shown (g, ml, or ea = a count): ${catalog}.
+Flag letters: m meat, k pork, f fish, s shellfish, d dairy, e egg, g gluten, n tree nut, p peanut, y soy, h honey.
+Requirements: dietary needs: ${p.diet.join(', ')||'none'}. STRICT allergies, never use any ingredient containing: ${p.allergies.join(', ')||'none'}. Also avoid: ${p.avoid.join(', ')||'nothing'}. Preferred cuisines: ${p.cuisines.join(', ')||'any'}. Aim for at most about $${isFinite(cap)?cap:8} per serving using inexpensive staples. Total time at most ${tm>=999?60:tm} minutes. Cook skill: ${p.exp}.
+Do NOT reuse any of these recipe names: ${names}.
+Recipes must be realistic, safe and delicious, with 4 to 6 beginner-friendly steps. Add " ~N" at the end of a step that takes N minutes of timed cooking. Include salt, pepper or oil as ingredients where used.
+Reply with ONLY a JSON array, no other text: [{"name":"","cuisines":["one or more of: ${CUISINES.join(', ')}"],"servings":3,"time":30,"level":1,"art":"one of: ${ART_TYPES.join(', ')}","desc":"one friendly sentence","ingredients":[{"id":"chicken_breast","q":450,"d":"450 g (1 lb) chicken breast, cubed"}],"steps":["Do this. ~10"]}]`;
+  const arr=await AI.sample.json(prompt,{modelTier:'default',cache:false});
+  if(!Array.isArray(arr))return 0;
+  let added=0;const have=new Set(allRecipes().map(r=>r.name.toLowerCase()));
+  for(const o of arr){
+    try{
+      if(!o||typeof o.name!=='string'||have.has(o.name.toLowerCase()))continue;
+      const ings=(o.ingredients||[]).filter(i=>ING[i?.id]&&typeof i.q==='number'&&i.q>0).map(i=>({id:i.id,q:i.q,d:String(i.d||ING[i.id].name).slice(0,120)}));
+      const steps=(o.steps||[]).filter(s=>typeof s==='string'&&s.length>8).map(s=>{const m=s.match(/^(.*?)\s*~(\d+)$/);return m?{t:m[1].slice(0,400),m:+m[2]}:{t:s.slice(0,400),m:0}});
+      if(ings.length<3||steps.length<3)continue;
+      const r=buildRecipe({id:'ai-'+Math.floor(hash(o.name+Date.now())*1e9).toString(36),name:o.name.slice(0,70),
+        cuis:(Array.isArray(o.cuisines)?o.cuisines:[]).filter(c=>CUISINES.includes(c)).slice(0,3).concat([]),
+        serv:Math.min(8,Math.max(1,Math.round(o.servings)||3)),time:Math.min(90,Math.max(5,Math.round(o.time)||30)),
+        lvl:Math.min(3,Math.max(1,Math.round(o.level)||1)),art:ART_TYPES.includes(o.art)?o.art:'bowl',
+        desc:String(o.desc||'A fresh idea from GrowAI.').slice(0,200),ings,steps,ai:true});
+      if(!r.cuis.length)r.cuis=['Healthy meals'];
+      if(!allowed(r))continue;
+      if(estimate(r).perServ>cap*1.15)continue;
+      S.gen.push(r);have.add(r.name.toLowerCase());added++;
+    }catch{}
+  }
+  if(S.gen.length>40)S.gen=S.gen.slice(-40);
+  save();return added;
+}
+
+/* ---- offline helper: answers common questions without the live model ---- */
+const ALT={
+  chicken:[['firm tofu','y'],['canned chickpeas',''],['canned tuna','f'],['ground turkey','m'],['eggs','e'],['red lentils','']],
+  salmon:[['canned tuna','f'],['frozen white fish fillets','f'],['chickpeas','']],
+  beef:[['red lentils',''],['finely chopped mushrooms',''],['ground turkey','m'],['black beans','']],
+  'olive oil':[['vegetable oil',''],['melted butter','d']],
+  butter:[['olive oil',''],['vegetable oil','']],
+  milk:[['water (fine for cooking and soups)',''],['soy or oat milk (check the label)','y']],
+  egg:[['a mashed banana (sweet recipes)',''],['1 tbsp ground flax mixed with 3 tbsp water',''],['firm tofu (scrambles)','y']],
+  cheese:[['nutritional yeast',''],['a squeeze of lemon and extra salt for brightness','']],
+  yogurt:[['coconut milk (curries)',''],['a squeeze of lemon with olive oil','']],
+  pasta:[['rice',''],['couscous','g'],['quinoa','']]
+};
+const SWAP_WORDS=[[/chicken/,'chicken'],[/salmon/,'salmon'],[/beef/,'beef'],[/olive oil/,'olive oil'],[/butter/,'butter'],[/milk/,'milk'],[/\begg/,'egg'],[/cheese/,'cheese'],[/yogurt|sour cream/,'yogurt'],[/pasta|spaghetti/,'pasta']];
+const safeList=a=>a.filter(([n,f])=>flagsAllowed(f||''));
+function mdLink(r){return `[${r.name}](#recipe-${r.id})`}
+function localAnswer(q){
+  const t=q.toLowerCase(),R=S.ctx?recipeById(S.ctx):null,pool=basePool();
+  const eff=(R?'':'');
+  if(/^(hi|hello|hey|yo)\b/.test(t))return 'Hi! I can help with recipes, ingredients, swaps and cooking tips. Try asking what you can cook with what is in your fridge.';
+  if(/(instead of|replace|substitut|swap|alternative|cheaper|without)/.test(t)&&!/vegan|vegetarian|dairy|lactose|gluten|\bnuts?\b/.test(t)){
+    const m=t.match(/(?:instead of|replace|substitute|swap|alternative to|cheaper than|without)\s+(?:the\s+)?([a-z ]+)/);
+    const target=(m?m[1]:t);
+    for(const [re,key] of SWAP_WORDS){if(re.test(target)||(!m&&re.test(t))){
+      const list=safeList(ALT[key]);
+      if(!list.length)return `I could not find a swap for ${key} that fits your dietary settings. Try a different ingredient, or ask the live GrowAI later.`;
+      return `Good swaps for **${key}**:\n`+list.slice(0,4).map(([n])=>'- '+n).join('\n')+`\nTexture and flavour change a little, so start with the same amount and taste as you go. I only listed options that fit your dietary settings and allergies.`;
+    }}
+  }
+  if(/vegan|vegetarian|dairy|lactose|gluten|\bnuts?\b/.test(t)){
+    const d=/vegan/.test(t)?'Vegan':/vegetarian/.test(t)?'Vegetarian':/dairy|lactose/.test(t)?'Dairy-free':/gluten/.test(t)?'Gluten-free':'Nut-free';
+    if(!R)return `Set **${d}** in your Profile and every recipe will be filtered for it. Open a recipe and ask me again for a step-by-step swap.`;
+    const bad=R.ings.filter(x=>!DIET_OK[d](ING[x.id].fl));
+    if(!bad.length)return `Good news: **${R.name}** is already ${d.toLowerCase()} as written.`;
+    const tip={m:'firm tofu or canned chickpeas',f:'chickpeas or tofu',s:'tofu or mushrooms',d:'olive oil, or leave it out',e:'a flax egg or leave it out',h:'maple syrup or sugar',g:'a gluten-free version (rice, quinoa, or tamari for soy sauce)',n:'seeds or leave them out',p:'sunflower seed butter'};
+    const key={Vegan:'mfsdeh',Vegetarian:'mfs',Pescatarian:'m','Dairy-free':'d','Gluten-free':'g','Nut-free':'np'}[d];
+    return `To make **${R.name}** ${d.toLowerCase()}:\n`+bad.map(x=>{const f=[...ING[x.id].fl].find(c=>key.includes(c));return `- ${ING[x.id].name}: use ${tip[f]||'a substitute'}`}).join('\n');
+  }
+  if(/protein/.test(t)){
+    const opts=safeList([['2 extra eggs on the side','e'],['a scoop of Greek yogurt on top','d'],['a can of chickpeas or black beans stirred in',''],['canned tuna','f'],['a handful of cheese','d'],['cubed firm tofu','y']]);
+    return 'Easy ways to add protein'+(R?` to **${R.name}**`:'')+':\n'+opts.slice(0,4).map(([n])=>'- '+n).join('\n')+'\nBeans and lentils are usually the cheapest per gram of protein.';
+  }
+  if(/simplif|easier|shorter|too hard|quick(er)? version/.test(t)){
+    if(!R)return 'Open a recipe first, then ask me to simplify it and I will give you a shorter version.';
+    return `A simpler way to cook **${R.name}**:\n`+R.steps.map((s,i)=>`- ${s.t.split('. ')[0].replace(/\.$/,'')}.`).join('\n')+'\nUse one pan or pot wherever you can, and prep everything before you turn on the heat.';
+  }
+  if(/(how|properly).*(cook|bake|roast).*chicken|chicken.*(done|properly|safe|dry)/.test(t))
+    return 'For juicy chicken: pat it dry, season well, and cook on medium-high without moving it for the first 3–4 minutes so it browns. It is safe at **74°C (165°F)** in the thickest part. No thermometer? Cut into the thickest piece. It should be white all the way through with clear juices. Rest it 5 minutes before slicing.';
+  if(/pasta.*(taste|better|bland|flavou?r)|better pasta/.test(t))
+    return 'Make pasta taste better:\n- Salt the water well (about 1 tbsp per 3 litres)\n- Save a cup of pasta water and splash it into the sauce\n- Cook the pasta in the sauce for the last minute\n- Finish with garlic, olive oil, lemon or a little cheese';
+  if(/\$\s?\d+|under \d|cheap|budget|afford/.test(t)){
+    const m=t.match(/\$?\s?(\d+(?:\.\d+)?)/),cap=m?parseFloat(m[1]):budgetCap();
+    const list=pool.filter(r=>estimate(r).perServ<=cap).sort((a,b)=>estimate(a).perServ-estimate(b).perServ).slice(0,4);
+    if(!list.length)return 'Nothing matches that budget with your current settings. Try a higher number.';
+    return `Meals at ${money(cap)} per serving or less (sample prices):\n`+list.map(r=>`- ${mdLink(r)}: about ${money(estimate(r).perServ)} per serving`).join('\n');
+  }
+  const w=t.match(/(?:with|have|got|using)\s+(.+)/);
+  if(/what can i (cook|make)|ideas|use up|leftover/.test(t)||w){
+    const text=(w?w[1]:t).replace(/[?.!]/g,'');
+    const toks=text.split(/,|\band\b|\bplus\b/).map(s=>s.trim().replace(/^(some|a|an|the)\s+/,'')).filter(Boolean);
+    const ids=new Set();
+    toks.forEach(tok=>{const k=tok.replace(/s$/,'');Object.values(ING).forEach(i=>{if(!i.staple&&(i.name.toLowerCase().includes(k)||i.id.replace(/_/g,' ')===k))ids.add(i.id)})});
+    if(!ids.size)return 'Tell me a few ingredients (like "chicken, rice and eggs") and I will find recipes that use them.';
+    const ranked=pool.map(r=>({r,n:r.ings.filter(x=>ids.has(x.id)).length})).filter(o=>o.n).sort((a,b)=>b.n-a.n||estimate(a.r).perServ-estimate(b.r).perServ).slice(0,3);
+    const skipped=[...ids].filter(i=>!flagsAllowed(ING[i].fl)).map(i=>ING[i].name.toLowerCase());
+    const sk=skipped.length?`\nI skipped ${skipped.join(', ')} because of your dietary settings.`:'';
+    if(!ranked.length)return 'I could not find a recipe in your settings that uses those. Try fewer ingredients, or check your Profile filters.'+sk;
+    return 'Here is what I would cook:\n'+ranked.map(o=>`- ${mdLink(o.r)} uses ${o.n} of your ingredients, about ${money(estimate(o.r).perServ)} per serving`).join('\n')+sk;
+  }
+  return 'I can help with swaps (try "What can I use instead of butter?"), protein boosts, cooking tips, budget meals under a price, and ideas from the ingredients you have. The live GrowAI model is not available right now, so I am using my built-in cooking helper.';
+}
+
+/* ================= UI PRIMITIVES ================= */
+const IC={
+  home:'<path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1z"/>',
+  compass:'<circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5-5 2 2-5z"/>',
+  heart:'<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.2l7.8-7.7 1-1.1a5.5 5.5 0 0 0 0-7.8z"/>',
+  sparkle:'<path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16v4M17 18h4"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+  check:'<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
+  refresh:'<path d="M20 11a8 8 0 0 0-14.5-3.5L4 9M4 4v5h5M4 13a8 8 0 0 0 14.5 3.5L20 15M20 20v-5h-5"/>',
+  send:'<path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/>',
+  left:'<path d="M19 12H5M12 19l-7-7 7-7"/>',
+  right:'<path d="M5 12h14M12 5l7 7-7 7"/>',
+  trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+  pin:'<path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
+  tag:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.2"/>',
+  store:'<path d="M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9c0 1.7 1.3 2.5 2.7 2.5S9.3 10.7 9.3 9c0 1.7 1.3 2.5 2.7 2.5s2.7-.8 2.7-2.5c0 1.7 1.3 2.5 2.7 2.5S20 10.7 20 9M10 20v-5h4v5"/>',
+  gauge:'<path d="M4 18a8 8 0 1 1 16 0M12 18l4-6"/>',
+  x:'<path d="M6 6l12 12M18 6L6 18"/>',
+  leaf:'<path d="M5 19c0-9 5-14 15-14 0 10-5 15-14 15M5 19l8-8"/>',
+  chat:'<path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.5A8 8 0 1 1 21 12z"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/>',
+  users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.5 3-6 6.500-6s6.5 2.500 6.500 6M16 4.500a3.500 3.500 0 0 1 0 7M18 14c2.300.700 3.500 2.700 3.500 6"/>',
+  list:'<path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/>',
+  download:'<path d="M12 4v11M7 11l5 5 5-5M5 20h14"/>',
+  stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>'
+};
+const ico=(n,cls='')=>`<svg class="ico ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`;
+
+/* ---- brand: original mark = a sprout growing out of a bowl ---- */
+const GLYPH=(c)=>`<path d="M11 35h42c0 11.500-9.500 19-21 19S11 46.500 11 35z" fill="${c}"/><path d="M32 36V22" stroke="${c}" stroke-width="3.500" stroke-linecap="round" fill="none"/><path d="M32 29C21 30 15 24 15 15c9-1 16 4 17 14z" fill="${c}"/><path d="M32 24C32 14 38 8 49 8c1 11-6 17-17 16z" fill="${c}"/>`;
+const markApp=(bg='#2E8B57',fg='#FFFFFF')=>`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GrowRecipes"><rect width="64" height="64" rx="18" fill="${bg}"/><g transform="translate(5.760 5.760) scale(.82)">${GLYPH(fg)}</g></svg>`;
+const markPlain=(c='#2E8B57')=>`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="GrowRecipes"><g>${GLYPH(c)}</g></svg>`;
+const logo=(cls='')=>`<span class="logo ${cls}">${markApp()}<span>Grow<span class="w2">Recipes</span></span></span>`;
+const FAVICON='data:image/svg+xml,'+encodeURIComponent(markApp());
+
+/* ---- illustrated dishes: tonal greens only, so no stock photos are needed ---- */
+function art(r){
+  const R=rng(r.id),cx=120,cy=82;
+  const sc=(n,rad,fn)=>{let o='';for(let i=0;i<n;i++){const a=R()*6.2832,d=Math.sqrt(R())*rad;o+=fn(cx+Math.cos(a)*d,cy+Math.sin(a)*d,i)}return o};
+  const fix=n=>n.toFixed(1);
+  const leaf=(x,y,rot,s,c,o=1)=>`<path transform="translate(${fix(x)} ${fix(y)}) rotate(${fix(rot)}) scale(${s})" d="M0 0C6-2 10-8 10-12 4-12-2-8 0 0Z" fill="${c}" opacity="${o}"/>`;
+  let s=`<svg viewBox="0 0 240 160" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(r.name)} illustration" xmlns="http://www.w3.org/2000/svg"><rect width="240" height="160" fill="var(--gl)"/>`;
+  for(let i=0;i<7;i++)s+=leaf(R()*240,R()*160,R()*360,1+R()*1.4,'var(--t4)',.55);
+  s+=`<circle cx="${cx}" cy="${cy+3}" r="59" fill="var(--t2)" opacity=".14"/><circle cx="${cx}" cy="${cy}" r="58" fill="var(--surface)" stroke="var(--t4)" stroke-width="2"/>`;
+  const D={
+    bowl:()=>`<circle cx="${cx}" cy="${cy}" r="46" fill="var(--t5)" stroke="var(--t4)" stroke-width="2"/>`
+      +sc(80,38,(x,y)=>`<ellipse cx="${fix(x)}" cy="${fix(y)}" rx="2.800" ry="1.300" transform="rotate(${fix(R()*180)} ${fix(x)} ${fix(y)})" fill="var(--surface)" stroke="var(--t4)" stroke-width=".6"/>`)
+      +sc(9,28,(x,y)=>`<rect x="${fix(x-5)}" y="${fix(y-4)}" width="10" height="8" rx="3" fill="${R()<.5?'var(--t2)':'var(--t3)'}" transform="rotate(${fix(R()*90)} ${fix(x)} ${fix(y)})"/>`)
+      +sc(5,26,(x,y)=>`<circle cx="${fix(x)}" cy="${fix(y)}" r="5" fill="var(--t1)"/><circle cx="${fix(x-4)}" cy="${fix(y+3)}" r="3.500" fill="var(--t1)"/><circle cx="${fix(x+4)}" cy="${fix(y+3)}" r="3.500" fill="var(--t1)"/>`)
+      +leaf(cx+10,cy-30,-30,1.300,'var(--t2)')+leaf(cx-24,cy-24,150,1.200,'var(--t1)'),
+    pasta:()=>{let p='';for(let k=0;k<2;k++){let d='';for(let t=0;t<12.6;t+=.25){const rr=3+t*2.900,a=t+k*3.14;d+=(t?'L':'M')+fix(cx+Math.cos(a)*rr)+' '+fix(cy+Math.sin(a)*rr)}p+=`<path d="${d}" fill="none" stroke="${k?'var(--t4)':'var(--t3)'}" stroke-width="5.500" stroke-linecap="round"/>`}
+      return p+sc(14,30,(x,y)=>`<circle cx="${fix(x)}" cy="${fix(y)}" r="${fix(2+R()*2)}" fill="var(--t2)"/>`)+leaf(cx-6,cy-4,-40,1.600,'var(--t1)')+leaf(cx+6,cy+8,140,1.300,'var(--t1)')},
+    soup:()=>`<circle cx="${cx}" cy="${cy}" r="50" fill="var(--t5)" stroke="var(--t4)" stroke-width="2"/><circle cx="${cx}" cy="${cy}" r="42" fill="var(--t3)"/>`
+      +`<path d="M${cx-30} ${cy+6}q15-22 30-6t30-6" fill="none" stroke="var(--t4)" stroke-width="3" opacity=".8" stroke-linecap="round"/>`
+      +sc(18,34,(x,y)=>`<circle cx="${fix(x)}" cy="${fix(y)}" r="${fix(1.600+R()*2.800)}" fill="${['var(--t5)','var(--t2)','var(--t1)'][Math.floor(R()*3)]}"/>`)
+      +`<ellipse cx="190" cy="108" rx="8" ry="11" transform="rotate(30 190 108)" fill="var(--t4)" stroke="var(--t3)" stroke-width="2"/><path d="M194 117l12 24" stroke="var(--t3)" stroke-width="4" stroke-linecap="round"/>`,
+    wrap:()=>`<g transform="rotate(-16 ${cx} ${cy})"><rect x="56" y="62" width="128" height="40" rx="20" fill="var(--t4)" stroke="var(--t3)" stroke-width="2"/><path d="M66 72q54-10 108 2" fill="none" stroke="var(--t5)" stroke-width="3" stroke-linecap="round"/><ellipse cx="60" cy="82" rx="8" ry="17" fill="var(--t5)" stroke="var(--t3)" stroke-width="2"/><circle cx="58" cy="76" r="3.500" fill="var(--t2)"/><circle cx="61" cy="86" r="3" fill="var(--t1)"/><circle cx="58" cy="92" r="2.500" fill="var(--t3)"/></g><g transform="rotate(8 ${cx} ${cy+30})" opacity=".92"><rect x="70" y="104" width="100" height="14" rx="7" fill="var(--t4)" stroke="var(--t3)" stroke-width="1.500"/></g>`,
+    pizza:()=>`<circle cx="${cx}" cy="${cy}" r="54" fill="var(--t4)"/><circle cx="${cx}" cy="${cy}" r="46" fill="var(--t5)" stroke="var(--t3)" stroke-width="1.500"/>`
+      +sc(13,38,(x,y)=>`<circle cx="${fix(x)}" cy="${fix(y)}" r="${fix(3.500+R()*3)}" fill="${['var(--t2)','var(--t1)','var(--t3)'][Math.floor(R()*3)]}"/>`)
+      +[0,60,120].map(a=>`<line x1="${cx}" y1="${cy-54}" x2="${cx}" y2="${cy+54}" transform="rotate(${a} ${cx} ${cy})" stroke="var(--surface)" stroke-width="2.500"/>`).join('')+leaf(cx+14,cy-14,-20,1.300,'var(--t1)'),
+    egg:()=>`<circle cx="${cx}" cy="${cy}" r="55" fill="var(--t1)"/><circle cx="${cx}" cy="${cy}" r="47" fill="var(--t2)"/>`
+      +sc(22,42,(x,y)=>`<circle cx="${fix(x)}" cy="${fix(y)}" r="${fix(1.500+R()*2.500)}" fill="var(--t3)" opacity=".8"/>`)
+      +[[102,70],[140,72],[120,102]].map(([x,y])=>`<ellipse cx="${x}" cy="${y}" rx="15" ry="13" fill="var(--surface)"/><circle cx="${x}" cy="${y}" r="6.500" fill="var(--t3)" stroke="var(--t2)" stroke-width="1.500"/>`).join(''),
+    salad:()=>`<circle cx="${cx}" cy="${cy}" r="50" fill="var(--t5)" stroke="var(--t4)" stroke-width="2"/>`
+      +sc(26,38,(x,y)=>`<ellipse cx="${fix(x)}" cy="${fix(y)}" rx="11" ry="5" transform="rotate(${fix(R()*180)} ${fix(x)} ${fix(y)})" fill="${['var(--t2)','var(--t3)','var(--t1)'][Math.floor(R()*3)]}" opacity=".9"/>`)
+      +sc(6,32,(x,y)=>`<circle cx="${fix(x)}" cy="${fix(y)}" r="6" fill="var(--surface)" stroke="var(--t3)" stroke-width="1.500"/><circle cx="${fix(x)}" cy="${fix(y)}" r="2" fill="var(--t4)"/>`)
+      +sc(5,30,(x,y)=>`<circle cx="${fix(x)}" cy="${fix(y)}" r="4" fill="var(--t1)"/>`),
+    bake:()=>`<rect x="46" y="36" width="148" height="92" rx="12" fill="var(--t5)" stroke="var(--t3)" stroke-width="2.500"/>`
+      +sc(10,40,(x,y)=>`<rect x="${fix(x-8)}" y="${fix(y-6)}" width="16" height="12" rx="4" fill="var(--t4)" stroke="var(--t2)" stroke-width="1.500" transform="rotate(${fix(R()*60-30)} ${fix(x)} ${fix(y)})"/>`)
+      +sc(7,38,(x,y)=>`<circle cx="${fix(x)}" cy="${fix(y)}" r="5.500" fill="var(--t1)"/><circle cx="${fix(x-4)}" cy="${fix(y+3)}" r="3.500" fill="var(--t1)"/>`)
+      +sc(4,34,(x,y)=>`<rect x="${fix(x-15)}" y="${fix(y-5)}" width="30" height="10" rx="5" fill="var(--t2)" transform="rotate(${fix(R()*50-25)} ${fix(x)} ${fix(y)})"/>`)
+  };
+  return s+(D[r.art]||D.bowl)()+'</svg>';
+}
+
+/* ---- tiny markdown for chat ---- */
+function md(text){
+  const inline=t=>esc(t).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\[([^\]]+)\]\((#recipe-[a-z0-9-]+)\)/g,'<a href="$2">$1</a>');
+  const out=[];let list=null;
+  String(text).split('\n').forEach(line=>{
+    const m=line.match(/^\s*[-*•]\s+(.*)/);
+    if(m){if(!list){list=[];out.push(list)}list.push(m[1])}
+    else{list=null;if(line.trim())out.push(line)}
+  });
+  return out.map(b=>Array.isArray(b)?'<ul>'+b.map(i=>'<li>'+inline(i)+'</li>').join('')+'</ul>':'<p>'+inline(b)+'</p>').join('');
+}
+
+/* ================= SHARED COMPONENTS ================= */
+const isFav=id=>S.favs.includes(id);
+function tagsFor(r,max=3){
+  const d=r.diets,out=[];
+  const first=d.find(x=>['Vegan','Vegetarian','Pescatarian'].includes(x));if(first)out.push(first);
+  ['High-protein','Gluten-free','Dairy-free','Nut-free','Halal-friendly'].forEach(x=>{if(d.includes(x)&&out.length<max)out.push(x)});
+  return out.slice(0,max);
+}
+const LVL=['','Beginner','Intermediate','Advanced'];
+function card(r){
+  const e=estimate(r),over=isFinite(budgetCap())&&e.perServ>budgetCap();
+  return `<article class="rc">
+    <a class="rc-art" href="#recipe-${r.id}" aria-label="Open ${esc(r.name)}">${art(r)}</a>
+    <button class="heart" data-a="fav" data-id="${r.id}" aria-pressed="${isFav(r.id)}" aria-label="${isFav(r.id)?'Remove from favourites':'Save to favourites'}: ${esc(r.name)}">${ico('heart')}</button>
+    <div class="rc-b">
+      <h3><a href="#recipe-${r.id}">${esc(r.name)}</a></h3>
+      <div class="rc-price"><b>${money(e.perServ)}</b><span>per serving · ${money(e.used)} total</span></div>
+      <div class="rc-meta"><span>${ico('clock')}${r.time} min</span><span>${ico('gauge')}${LVL[r.lvl]}</span>${over?'<span class="tag line">Over budget</span>':''}${r.ai?'<span class="tag">GrowAI recipe</span>':''}</div>
+      <div class="rc-tags">${tagsFor(r).map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <div class="rc-foot"><a class="btn sm" href="#recipe-${r.id}">View recipe</a></div>
+    </div></article>`;
+}
+const chip=(on,a,v,label=v,extra='')=>`<button type="button" class="chip" aria-pressed="${on}" data-a="${a}" data-v="${esc(v)}" ${extra}>${ico('check')}${esc(label)}</button>`;
+const opt=(on,a,v,title,sub='')=>`<button type="button" class="opt" aria-pressed="${on}" data-a="${a}" data-v="${esc(v)}"><b>${esc(title)}</b>${sub?`<span>${esc(sub)}</span>`:''}</button>`;
+const SAMPLE_NOTE=`<p class="sample-note">${ico('info')}<span><b>Sample prices.</b> These are demonstration prices, not live store prices. Real store data can be connected later.</span></p>`;
+
+/* ================= ONBOARDING ================= */
+const DIETS=['Vegetarian','Vegan','Pescatarian','Halal','Gluten-free','Dairy-free','Nut-free','High-protein','No restrictions','Other'];
+const ALLERGENS=['Peanuts','Tree nuts','Shellfish','Eggs','Milk','Soy'];
+const STEP_COUNT=6; // steps 1..6 show progress, 0 = welcome, 7 = ready
+
+const secDiet=()=>`<div class="chips" role="group" aria-label="Dietary preferences">${DIETS.map(d=>chip(S.prof.diet.includes(d),'togDiet',d)).join('')}</div>
+  ${S.prof.diet.includes('Other')?`<div style="margin-top:16px;max-width:420px"><label class="lbl" for="otherIn">Anything else to leave out?</label><input class="inp" id="otherIn" data-enter="addAvoid" placeholder="Type an ingredient, press Enter"/></div>`:''}
+  ${avoidChips()}`;
+const avoidChips=()=>S.prof.avoid.length?`<div class="chips" style="margin-top:14px">${S.prof.avoid.map((a,i)=>`<button class="chip sm" aria-pressed="true" data-a="rmAvoid" data-v="${i}" aria-label="Remove ${esc(a)}">${esc(a)} ${ico('x')}</button>`).join('')}</div>`:'';
+const secCuisine=()=>`<div class="chips">${CUISINES.map(c=>chip(S.prof.cuisines.includes(c),'togCuisine',c)).join('')}</div>`;
+const secAllergy=()=>`<div class="chips" role="group" aria-label="Allergies">${ALLERGENS.map(a=>chip(S.prof.allergies.includes(a),'togAllergy',a)).join('')}</div>
+  <div style="margin-top:20px;max-width:440px"><label class="lbl" for="avoidIn">Other ingredients to avoid</label><input class="inp" id="avoidIn" data-enter="addAvoid" placeholder="e.g. mushrooms, cilantro. Press Enter to add"/></div>${avoidChips()}
+  <div class="note" style="margin-top:20px">${ico('info')}<span>Allergies are strict. Any recipe containing them is hidden everywhere, including GrowAI suggestions. Always double-check food labels for cross-contact.</span></div>`;
+const secBudget=()=>`<div class="opts">${Object.entries(BUDGETS).map(([k,b])=>opt(S.prof.budget===k,'setBudget',k,b.label,b.sub)).join('')}</div>
+  <div style="margin-top:18px;max-width:360px"><label class="lbl" for="customIn">Or set your own limit (per serving)</label><input class="inp" id="customIn" inputmode="decimal" placeholder="e.g. 6.50" value="${esc(S.prof.budget==='custom'?S.prof.custom:'')}" data-change="customBudget"/></div>`;
+const secLocation=()=>`<div class="row" style="max-width:560px"><div style="flex:1;min-width:220px"><label class="lbl" for="locIn">City or postal code</label><input class="inp" id="locIn" value="${esc(S.prof.locText)}" placeholder="e.g. your city or postal code" data-change="locText"/></div><button class="btn soft" data-a="useLoc" style="align-self:flex-end">${ico('pin')} Use my location</button></div>
+  ${S.prof.lat!=null?`<p class="muted" style="margin-top:10px">${ico('check')} Location saved on this device.</p>`:''}
+  <h3 class="sec-t">Where do you shop?</h3>
+  <div class="chips" role="group" aria-label="Preferred grocery stores">${STORES.map(s=>chip(S.prof.stores.includes(s.id),'togStore',s.id,s.name)).join('')}</div>
+  <div class="note" style="margin-top:20px">${ico('info')}<span>Live store lookup is not connected yet. GrowRecipes compares the stores you pick using <b>sample prices</b>, clearly labelled wherever they appear. If you pick none, we compare four popular chains.</span></div>`;
+const secCook=()=>`<h3 class="sec-t" style="margin-top:0">Cooking experience</h3><div class="opts">${[['Beginner','I am just getting started'],['Intermediate','I cook a few times a week'],['Advanced','I am comfortable with most recipes']].map(([k,s])=>opt(S.prof.exp===k,'setExp',k,k,s)).join('')}</div>
+  <h3 class="sec-t">Time you usually want to spend</h3><div class="opts">${Object.entries(TIMES).map(([k,t])=>opt(S.prof.time===k,'setTime',k,t.label)).join('')}</div>`;
+
+const STEPS=[null,
+ {h:'Any dietary needs?',s:'Pick everything that applies. We will only show meals that fit.',f:secDiet},
+ {h:'What do you love to eat?',s:'Choose a few. We will lean towards these when we pick your recipes.',f:secCuisine},
+ {h:'Allergies and ingredients to avoid',s:'These are treated as strict exclusions, not preferences.',f:secAllergy},
+ {h:'What is your meal budget?',s:'We will keep recipes within this cost per serving.',f:secBudget},
+ {h:'Where do you shop?',s:'We compare ingredient prices across the stores you choose.',f:secLocation},
+ {h:'How do you like to cook?',s:'Helps us match recipe difficulty and time.',f:secCook}
+];
+
+function welcomeView(){
+  return `<div class="welcome">
+    ${logo()}
+    <div class="stage" aria-hidden="true">
+      <div class="plate">${art({id:'welcome-hero',name:'Bowl',art:'bowl'}).replace('viewBox="0 0 240 160"','viewBox="58 20 124 124"')}</div>
+      <div class="receipt">
+        <div class="rr"><span>Chicken breast</span><i class="dots"></i><b>$2.76</b></div>
+        <div class="rr"><span>Rice</span><i class="dots"></i><b>$0.55</b></div>
+        <div class="rr"><span>Broccoli</span><i class="dots"></i><b>$2.24</b></div>
+        <div class="tot"><span>Cheapest mix</span><span>$5.55</span></div>
+        <div class="save">You save $1.20 · sample prices</div>
+      </div>
+    </div>
+    <h1>Eat Better. Spend Less.</h1>
+    <p class="sub">Find meals that fit your diet and budget, and see which store sells each ingredient for the least.</p>
+    <div class="ctas"><button class="btn lg" data-a="start">Get started ${ico('right')}</button><button class="btn lg ghost" data-a="login">Log in</button></div>
+  </div>`;
+}
+function readyView(){
+  const n=basePool().length,p=S.prof;
+  const sum=[];
+  if(p.diet.length&&!p.diet.includes('No restrictions'))sum.push(['Diet',p.diet.filter(d=>d!=='Other').join(', ')]);
+  if(p.allergies.length)sum.push(['Allergies avoided',p.allergies.join(', ')]);
+  sum.push(['Budget',budgetLabel()],['Cooking',p.exp+', '+TIMES[p.time].label.toLowerCase()],['Stores',activeStores().map(s=>STORE_NAME[s]).join(', ')]);
+  if(p.cuisines.length)sum.push(['Cuisines',p.cuisines.join(', ')]);
+  return `<div class="${U.animStep!==S.step?'step-in':''}"><span class="tag solid">${ico('check')} All set</span>
+   <h1 style="margin-top:14px">Your GrowRecipes experience is ready!</h1>
+   <p class="sub">We have personalized your recipes based on your food preferences, dietary needs, budget and location. <b>${n} recipes</b> match you right now.</p>
+   <div class="card pad" style="margin-bottom:22px"><dl style="margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 20px">${sum.map(([k,v])=>`<dt style="font-weight:700">${k}</dt><dd style="margin:0;color:var(--muted)">${esc(v)}</dd>`).join('')}</dl></div>
+   <div style="max-width:380px"><label class="lbl" for="nameIn">What should we call you? <span class="muted" style="font-weight:400">(optional)</span></label><input class="inp" id="nameIn" value="${esc(p.name)}" data-change="name" placeholder="Your first name"/></div>
+   <div style="max-width:380px;margin-top:14px"><label class="lbl" for="emailIn">Email to save your account on this device <span class="muted" style="font-weight:400">(optional)</span></label><input class="inp" id="emailIn" type="email" value="${esc(p.email)}" data-change="email" placeholder="you@school.edu"/></div>
+   <div style="margin-top:28px"><button class="btn lg" data-a="finish">Explore my recipes ${ico('right')}</button></div></div>`;
+}
+function onboardingView(){
+  if(S.step===0)return welcomeView();
+  const top=`<div class="ob-top">${logo('sm')}${S.step<=STEP_COUNT&&!U.editOnly?`<span class="muted" style="font-weight:700;white-space:nowrap">Step ${S.step} of ${STEP_COUNT}</span><div class="ob-prog" role="progressbar" aria-valuemin="1" aria-valuemax="${STEP_COUNT}" aria-valuenow="${S.step}"><i style="width:${S.step/STEP_COUNT*100}%"></i></div>`:''}</div>`;
+  if(S.step>STEP_COUNT)return `<div class="ob">${top}<div class="ob-body">${readyView()}</div></div>`;
+  const st=STEPS[S.step];
+  return `<div class="ob">${top}<div class="ob-body"><div class="${U.animStep!==S.step?'step-in':''}" id="obStep"><h1>${st.h}</h1><p class="sub">${st.s}</p>${st.f()}</div></div>
+   <div class="ob-foot"><div>${U.editOnly?`<button class="btn ghost" data-a="cancelEdit">Cancel</button><button class="btn" data-a="saveEdit">Save changes</button>`:`<button class="btn ghost" data-a="back">${ico('left')} Back</button><button class="btn" data-a="next">${S.step===STEP_COUNT?'See my results':'Continue'} ${ico('right')}</button>`}</div></div></div>`;
+}
+
+/* ================= APP SHELL ================= */
+const NAV=[['home','Home','home'],['discover','Discover Recipes','compass'],['favourites','My Favourites','heart'],['assistant','AI Cooking Assistant','sparkle'],['profile','My Profile','user']];
+const TABS={home:'Home',discover:'Discover',favourites:'Favourites',assistant:'GrowAI',profile:'Profile'};
+function shell(route,body){
+  const cur=route.name==='recipe'?'discover':route.name;
+  const ini=(S.prof.name||S.prof.email||'G').trim()[0].toUpperCase();
+  return `<header class="top"><div class="wrap">
+    <a href="#home" aria-label="GrowRecipes home" style="display:inline-flex">${logo('sm')}</a>
+    <nav class="nav" aria-label="Main">${NAV.map(([h,l,i])=>`<a href="#${h}" ${cur===h?'aria-current="page"':''}>${ico(i)}${l}</a>`).join('')}</nav>
+    <div class="search"><label class="sr" for="gq">Search recipes</label>${ico('search')}<input class="inp" id="gq" type="search" placeholder="Search recipes or ingredients" value="${esc(U.q)}" data-enter="globalSearch" data-input="searchLive"/></div>
+    <a class="avatar" href="#profile" aria-label="My profile">${esc(ini)}</a>
+  </div></header>
+  <main><div class="wrap" id="view">${body}</div></main>
+  <nav class="tabs" aria-label="Main">${NAV.map(([h,l,i])=>`<a href="#${h}" ${cur===h?'aria-current="page"':''}>${ico(i)}<span>${TABS[h]}</span></a>`).join('')}</nav>`;
+}
+
+/* ---- Home ---- */
+function greeting(){const h=new Date().getHours();return h<12?'Good morning':h<18?'Good afternoon':'Good evening'}
+function recsHTML(){
+  if(U.loading)return `<div class="grid">${Array.from({length:6},()=>'<div class="skel"></div>').join('')}</div><p class="muted" style="margin-top:14px;text-align:center">${U.genBusy?'GrowAI is creating brand-new recipes for you…':'Finding fresh recipes for you…'}</p>`;
+  const ids=S.rec.ids||[],list=ids.map(recipeById).filter(r=>r&&allowed(r));
+  if(!list.length)return `<div class="empty"><h3>No recipes to show yet</h3><p>Try regenerating, or loosen your filters in your profile.</p><button class="btn" data-a="regen">Find more recipes</button></div>`;
+  return (S.rec.note?`<div class="note" style="margin-bottom:16px">${ico('sparkle')}<span>${esc(S.rec.note)}</span></div>`:'')+`<div class="grid">${list.map(card).join('')}</div>`;
+}
+function rail(title,sub,list,link){
+  if(!list.length)return '';
+  return `<div class="sechead"><div><h2>${title}</h2><p>${sub}</p></div>${link?`<a class="linkbtn" href="#discover" data-a="preset" data-v="${link}">See all</a>`:''}</div><div class="rail">${list.slice(0,8).map(card).join('')}</div>`;
+}
+function homeView(){
+  if(!S.rec.ids&&!U.loading){S.rec.ids=pickInitial()}
+  const p=S.prof,pool=eligible(Infinity).filter(allowed);
+  const cheap=pool.filter(r=>estimate(r).perServ<5).sort((a,b)=>estimate(a).perServ-estimate(b).perServ);
+  const prot=pool.filter(r=>r.prot>=25).sort((a,b)=>b.prot-a.prot);
+  const quick=pool.filter(r=>r.time<=20).sort((a,b)=>a.time-b.time);
+  const week=pool.filter(r=>r.serv>=4&&estimate(r).perServ<4.5).sort((a,b)=>estimate(a).perServ-estimate(b).perServ);
+  const pills=[...(p.diet.filter(d=>d!=='Other'&&d!=='No restrictions')),budgetLabel(),...activeStores().slice(0,3).map(s=>STORE_NAME[s])];
+  return `<div class="hello"><div><h1>${greeting()}${p.name?', '+esc(p.name):''}! What are we cooking today?</h1><p>Discover affordable meals made for your preferences and budget.</p>
+    <div class="prefline">${pills.map(x=>`<span class="tag">${esc(x)}</span>`).join('')}<a class="linkbtn" href="#profile" style="font-size:14px">Edit</a></div></div></div>
+  <div class="sechead"><div><h2>Picked for you</h2><p>Matched to your diet, allergies, budget and taste.</p></div>
+   <button class="btn" data-a="regen" id="regenBtn" ${U.loading?'disabled':''}>${ico('refresh',U.loading?'spin':'')} ${U.loading?'Finding recipes…':'Find more recipes'}</button></div>
+  <div id="recs">${recsHTML()}</div>
+  <div style="margin-top:14px">${SAMPLE_NOTE}</div>
+  ${rail('Meals under $5 a serving','Cheap, filling and student-approved.',cheap,'cheap')}
+  ${rail('High-protein student meals','25 g of protein or more per serving.',prot,'protein')}
+  ${rail('Quick meals under 20 minutes','From fridge to plate fast.',quick,'quick')}
+  ${rail('Budget-friendly weekly meals','Big batches that make cheap leftovers.',week,'week')}`;
+}
+function pickInitial(){
+  const pool=basePool();
+  const pick=weightedPick(pool,Math.min(6,pool.length));
+  S.seen=Array.from(new Set(S.seen.concat(pick.map(r=>r.id))));save();return pick.map(r=>r.id);
+}
+
+/* ---- Discover ---- */
+function discoverList(){
+  let list=allRecipes().filter(allowed);
+  const q=U.q.trim().toLowerCase();
+  if(q)list=list.filter(r=>(r.name+' '+r.desc+' '+r.cuis.join(' ')+' '+r.ings.map(x=>ING[x.id].name).join(' ')).toLowerCase().includes(q));
+  if(U.fCuisine!=='All')list=list.filter(r=>r.cuis.includes(U.fCuisine));
+  if(U.fTime!=='any')list=list.filter(r=>r.time<=+U.fTime);
+  if(U.fCost!=='any')list=list.filter(r=>estimate(r).perServ<=+U.fCost);
+  if(U.fProtein)list=list.filter(r=>r.prot>=25);
+  const by={match:(a,b)=>scoreRecipe(b)-scoreRecipe(a),cost:(a,b)=>estimate(a).perServ-estimate(b).perServ,time:(a,b)=>a.time-b.time,protein:(a,b)=>b.prot-a.prot};
+  return list.sort(by[U.fSort]);
+}
+function discoverResults(){
+  const l=discoverList(),hidden=allRecipes().length-allRecipes().filter(allowed).length;
+  return `<p class="muted" style="margin-bottom:14px">${l.length} recipe${l.length===1?'':'s'}${hidden?` · ${hidden} hidden by your dietary needs and allergies`:''}</p>`+
+   (l.length?`<div class="grid">${l.map(card).join('')}</div>`:`<div class="empty"><h3>No recipes match those filters</h3><p>Try a different cuisine or clear the filters.</p><button class="btn" data-a="clearFilters">Clear filters</button></div>`);
+}
+function discoverView(){
+  const sel=(id,v,opts)=>`<select class="inp" id="${id}" data-change="${id}" aria-label="${id}">${opts.map(([k,l])=>`<option value="${k}" ${String(v)===String(k)?'selected':''}>${l}</option>`).join('')}</select>`;
+  return `<div class="page-h"><h1>Discover recipes</h1><p>Every recipe here already fits your dietary needs and allergies.</p></div>
+  <div class="filters" role="group" aria-label="Filters">
+    ${sel('fCuisine',U.fCuisine,[['All','All cuisines'],...CUISINES.map(c=>[c,c])])}
+    ${sel('fTime',U.fTime,[['any','Any time'],['20','Under 20 min'],['30','Under 30 min'],['45','Under 45 min']])}
+    ${sel('fCost',U.fCost,[['any','Any cost'],['3','Up to $3 / serving'],['4','Up to $4 / serving'],['5','Up to $5 / serving']])}
+    ${sel('fSort',U.fSort,[['match','Best match'],['cost','Lowest cost'],['time','Fastest'],['protein','Most protein']])}
+    <button class="chip" aria-pressed="${U.fProtein}" data-a="togProtein">${ico('check')}High-protein</button>
+  </div>
+  <div id="dres">${discoverResults()}</div><div style="margin-top:20px">${SAMPLE_NOTE}</div>`;
+}
+
+/* ---- Favourites ---- */
+function favList(){
+  let l=S.favs.map(recipeById).filter(Boolean);
+  const q=U.favQ.trim().toLowerCase();
+  if(q)l=l.filter(r=>(r.name+' '+r.cuis.join(' ')+' '+r.ings.map(x=>ING[x.id].name).join(' ')).toLowerCase().includes(q));
+  if(U.favC!=='All')l=l.filter(r=>r.cuis.includes(U.favC));
+  return l;
+}
+function favResults(){
+  const l=favList();
+  if(!S.favs.length)return `<div class="empty"><h3>No favourites yet</h3><p>Tap the heart on any recipe to save it here.</p><a class="btn" href="#discover">Discover recipes</a></div>`;
+  if(!l.length)return `<div class="empty"><h3>Nothing matches your search</h3><p>Try a different word or cuisine.</p></div>`;
+  return `<div class="grid">${l.map(r=>card(r).replace('</div></article>',`<button class="btn sm ghost" data-a="fav" data-id="${r.id}" style="margin-top:2px">${ico('trash')} Remove</button></div></article>`)).join('')}</div>`;
+}
+function favouritesView(){
+  return `<div class="page-h"><h1>My favourites</h1><p>${S.favs.length?S.favs.length+' saved recipe'+(S.favs.length===1?'':'s'):'Your saved recipes live here.'}</p></div>
+  <div class="filters"><div class="search" style="margin-left:0;max-width:340px;flex:1">${ico('search')}<label class="sr" for="favq">Search favourites</label><input class="inp" id="favq" type="search" placeholder="Search saved recipes" value="${esc(U.favQ)}" data-input="favQ" style="border-radius:999px"/></div>
+  <select class="inp" aria-label="Cuisine" data-change="favC">${['All',...CUISINES].map(c=>`<option ${U.favC===c?'selected':''}>${c}</option>`).join('')}</select></div>
+  <div id="favres">${favResults()}</div>`;
+}
+
+/* ---- Recipe detail ---- */
+function recipeView(id){
+  const r=recipeById(id);
+  if(!r)return `<div class="empty"><h3>We could not find that recipe</h3><a class="btn" href="#discover">Browse recipes</a></div>`;
+  const e=estimate(r),ck=S.checks[r.id]||{};
+  const blocked=!allowed(r);
+  const ask=['Can I replace the main protein with something cheaper?','Can I make this without dairy?','How can I make this higher in protein?','What can I use instead of olive oil?','Can you simplify these instructions?'];
+  const halalNote=r.diets.includes('Halal-friendly')&&/m/.test(r.f)?'<p class="muted" style="font-size:13.5px;margin-top:8px">Halal-friendly means no pork or alcohol. Buy halal-certified meat.</p>':'';
+  return `<a class="back" href="#discover">${ico('left')} All recipes</a>
+  ${blocked?`<div class="note" style="margin-bottom:16px">${ico('info')}<span>This recipe conflicts with your current dietary settings or allergies. Check the ingredient list carefully before cooking.</span></div>`:''}
+  <div class="rhero"><div class="art">${art(r)}</div><div>
+    <div class="rc-tags">${r.cuis.map(c=>`<span class="tag line">${esc(c)}</span>`).join('')}${r.ai?'<span class="tag solid">GrowAI recipe</span>':''}</div>
+    <h1>${esc(r.name)}</h1><p class="desc">${esc(r.desc)}</p>
+    <div class="rc-tags">${r.diets.map(t=>`<span class="tag">${t}</span>`).join('')}</div>${halalNote}
+    <div class="stats"><div class="stat"><b>${r.time} min</b><span>Cooking time</span></div><div class="stat"><b>${LVL[r.lvl]}</b><span>Difficulty</span></div><div class="stat"><b>${r.serv}</b><span>Servings</span></div></div>
+    <div class="costbox"><div><b>${money(e.used)}</b><span>Estimated total · ${money(e.perServ)} per serving</span></div><div><b>${money(e.pkg)}</b><span>Full packages at the till</span></div></div>
+    <p class="muted" style="font-size:13.5px;margin-top:8px">The left number is only what this recipe uses. The right number is what you pay for whole packages. Leftovers keep for other meals.</p>
+    <div class="actions"><button class="btn lg" data-a="cheapest" data-id="${r.id}">${ico('tag')} Find cheapest ingredients</button>
+      <button class="btn lg ghost" data-a="fav" data-id="${r.id}" aria-pressed="${isFav(r.id)}">${ico('heart')} ${isFav(r.id)?'Saved':'Save'}</button></div>
+  </div></div>
+  <div id="cmp">${S.cmpOpen[r.id]?comparisonHTML(r):''}</div>
+  <div class="two"><section aria-labelledby="ih"><h2 id="ih" style="font-size:26px;margin-bottom:6px">Ingredients</h2><p class="muted" style="margin-bottom:8px">Tick items as you buy them. Prices are the cost of the amount used.</p>
+    <ul class="ings">${e.lines.map(({x,used})=>`<li class="${ck[x.id]?'done':''}"><label><input type="checkbox" class="cb" data-change="tickIng" data-id="${r.id}" data-v="${x.id}" ${ck[x.id]?'checked':''}/><span class="q">${esc(x.d)}${ING[x.id].staple?'<small>Pantry staple, you may already have it</small>':''}</span><span class="pr">${money(used)}</span></label></li>`).join('')}</ul>
+    <div style="margin-top:12px">${SAMPLE_NOTE}</div></section>
+  <section aria-labelledby="sh"><h2 id="sh" style="font-size:26px;margin-bottom:14px">Cooking instructions</h2>
+    <ol class="steps">${r.steps.map(s=>`<li><p>${esc(s.t)}${s.m?`<span class="tag tm">${ico('clock')} ${s.m} min</span>`:''}</p></li>`).join('')}</ol>
+    <div class="card pad" style="margin-top:26px;background:var(--gl);box-shadow:none"><h3 style="font-size:20px">${ico('sparkle')} Ask GrowAI about this recipe</h3><p class="muted">GrowAI knows this recipe and your dietary settings.</p>
+      <div class="ask">${ask.map(q=>`<button class="chip sm" data-a="askAbout" data-id="${r.id}" data-v="${esc(q)}">${esc(q)}</button>`).join('')}</div>
+      <div style="margin-top:14px"><button class="btn sm" data-a="askAbout" data-id="${r.id}" data-v="">${ico('chat')} Open chat</button></div></div></section></div>`;
+}
+
+/* ---- Price comparison (the receipt) ---- */
+function comparisonHTML(r){
+  const mode=S.cmode,c=compare(r,mode),single=c.singles[0];
+  const groups={};c.rows.forEach(w=>{(groups[w.best.store]=groups[w.best.store]||[]).push(w)});
+  const shopTotalPkg=c.checkout;
+  const storeNames=c.stores.map(s=>STORE_NAME[s]).join(', ');
+  return `<section class="cmp" aria-labelledby="ch"><div class="cmp-h"><div><h2 id="ch" style="font-size:clamp(24px,3.4vw,34px)">Cheapest ingredients</h2><p class="muted">Comparing ${esc(storeNames)} · <a href="#profile" class="linkbtn" style="font-size:inherit">change stores</a></p></div>
+    <div class="seg" role="group" aria-label="Compare by"><button aria-pressed="${mode==='pack'}" data-a="cmode" data-v="pack">Full package price</button><button aria-pressed="${mode==='used'}" data-a="cmode" data-v="used">Cost of amount used</button></div></div>
+  <div class="tiles">
+    <div class="tile hi"><b>${money(c.save)}</b><span>${c.save>0.005?'Saved vs. average prices at your stores':'No difference across your stores'}</span></div>
+    <div class="tile"><b>${money(c.total)}</b><span>${mode==='used'?'Cheapest cost of what the recipe uses':'Cheapest cost of whole packages'}</span></div>
+    <div class="tile"><b>${single?money(single.total):'—'}</b><span>${single?`Best single store: ${esc(STORE_NAME[single.store])}`:'No single store stocks everything'}</span></div>
+    <div class="tile"><b>${c.stops}</b><span>store${c.stops===1?'':'s'} in the cheapest plan</span></div></div>
+  <div class="card ledger">
+    ${c.rows.map(w=>`<div class="lrow"><div class="nm"><b>${esc(w.ing.name)}</b><small>Needs ${esc(w.x.d)}</small></div>
+      <div class="best"><span class="price">${money(w.best.val)}</span><span class="st"><b>${ico('store')} ${esc(STORE_NAME[w.best.store])}</b><small>${mode==='pack'?'Package: '+esc(w.best.pkg)+' · uses '+money(w.best.used):'Package: '+esc(w.best.pkg)+' · '+money(w.best.price)}</small></span></div>
+      <div class="others">${w.list.map((o,i)=>`<span class="o ${i===0?'win':''}">${esc(STORE_NAME[o.store])} ${money(o.val)}${o.size>w.ing.size&&mode==='pack'?' ('+esc(o.pkg)+')':''}</span>`).join('')}${w.save>0.005?`<span class="savechip">Save ${money(w.save)}</span>`:''}</div></div>`).join('')}
+  </div>
+  ${c.anyFallback?`<p class="muted" style="font-size:13.5px;margin-top:12px">Some items were not stocked at your chosen stores in the sample data, so we compared all stores for those.</p>`:''}
+  <div class="totals"><div class="note">${ico('info')}<span><b>Whole package vs amount used:</b> you pay at the till for full packages (${money(c.checkout)} in this plan), but this recipe only uses ${money(c.usedTotal)} of it. The rest is leftover for other meals.</span></div>
+  <div class="note">${ico('info')}<span>Savings are measured against the average price across your stores for the standard package size. Costco prices assume a membership and bigger packages, so check “Full package price” before you buy.</span></div></div>
+  ${SAMPLE_NOTE}
+  <h3 style="font-size:26px;margin:34px 0 4px">Shopping list</h3><p class="muted">Grouped by store for the cheapest plan. Tick items as you go.</p>
+  <div class="shop">${Object.entries(groups).map(([sid,rows])=>`<div class="card grp"><h4><span>${ico('store')} ${esc(STORE_NAME[sid])}</span><span>${money(rows.reduce((s,w)=>s+w.best.price,0))}</span></h4>
+    ${rows.map(w=>{const k=r.id+':'+w.x.id,done=S.shop[k];return `<label class="it ${done?'done':''}"><input type="checkbox" class="cb" data-change="tickShop" data-v="${k}" ${done?'checked':''}/><span class="t">${esc(w.ing.name)}<small>${esc(w.best.pkg)} package · uses ${money(w.best.used)}</small></span><b>${money(w.best.price)}</b></label>`}).join('')}</div>`).join('')}</div>
+  <div class="totals" style="margin-top:18px"><div class="tile"><b>${money(shopTotalPkg)}</b><span>Estimated total at the till</span></div><div class="tile"><b>${money(c.usedTotal)}</b><span>Cost of what this recipe uses</span></div>
+   <div class="tile hi"><b>${money(c.save)}</b><span>${c.save>0.005?`By shopping at the cheapest available stores, you could save ${money(c.save)} on this recipe.`:'Prices are about the same everywhere for this recipe.'}</span></div></div></section>`;
+}
+
+/* ---- Assistant ---- */
+function chatSuggestions(){
+  const R=S.ctx?recipeById(S.ctx):null;
+  return R?['Can I make this cheaper?','Make this vegetarian','How can I add more protein?','Simplify the steps','What can I use instead of olive oil?']
+    :['What can I cook with chicken, rice and eggs?','How do I make pasta taste better?','What is a cheaper alternative to salmon?','How do I cook chicken properly?','Can I substitute butter for olive oil?','What are some meals under $5?'];
+}
+function msgHTML(m){return m.role==='user'?`<div class="m u">${esc(m.text)}</div>`:`<div class="m a"><div class="by">${ico('sparkle')} GrowAI</div>${md(m.text)}</div>`}
+function assistantView(){
+  const R=S.ctx?recipeById(S.ctx):null,p=S.prof;
+  return `<div class="page-h"><h1>GrowAI cooking assistant</h1><p>Ask about recipes, ingredients, swaps and cooking tips.</p></div>
+  <div class="chat"><aside class="chat-side"><div class="card ctxcard"><h4>${ico('leaf')} What GrowAI knows</h4><p class="muted" style="font-size:14.5px">${[p.diet.filter(d=>d!=='No restrictions').join(', '),p.allergies.length?'avoids '+p.allergies.join(', ').toLowerCase():'',budgetLabel().toLowerCase(),p.exp.toLowerCase()+' cook'].filter(Boolean).map(esc).join(' · ')}</p><a class="linkbtn" href="#profile" style="font-size:14px">Edit in profile</a></div>
+   ${R?`<div class="card ctxcard"><h4>${ico('chat')} Talking about</h4><p><a href="#recipe-${R.id}" style="font-weight:700">${esc(R.name)}</a></p><button class="linkbtn" data-a="clearCtx" style="font-size:14px;margin-top:6px">Stop talking about this recipe</button></div>`:''}
+   <div class="card ctxcard"><p class="muted" style="font-size:13.5px" id="aiMode">${AI.available()?'Live GrowAI is on. Answers come from Claude and respect your allergies.':'Using the built-in cooking helper. Live GrowAI is not available here.'}</p></div></aside>
+  <section class="card chat-main" aria-label="Chat"><div class="msgs" id="msgs" role="log" aria-live="polite">${S.chat.length?S.chat.map(msgHTML).join(''):`<div class="m a"><div class="by">${ico('sparkle')} GrowAI</div><p>Hi${p.name?' '+esc(p.name):''}! I am GrowAI. ${R?`Ask me anything about <b>${esc(R.name)}</b>.`:'What are we cooking?'}</p></div>`}</div>
+   <div class="composer"><div class="sug">${chatSuggestions().map(q=>`<button class="chip sm" data-a="send" data-v="${esc(q)}">${esc(q)}</button>`).join('')}</div>
+    <form data-form="chat" autocomplete="off"><label class="sr" for="chatIn">Message GrowAI</label><input class="inp" id="chatIn" placeholder="Ask GrowAI anything about cooking…" maxlength="500"/><button class="btn" type="submit" id="sendBtn" aria-label="Send">${ico('send')}</button></form>
+    ${S.chat.length?`<div style="margin-top:8px;text-align:right"><button class="linkbtn" data-a="clearChat" style="font-size:13.5px">Clear conversation</button></div>`:''}</div></section></div>`;
+}
+
+/* ---- Profile ---- */
+function profileView(){
+  const p=S.prof;
+  return `<div class="page-h"><h1>My profile</h1><p>Changes shape your next recipes straight away.</p></div><div class="pgrid">
+  <section class="card"><h3>Account</h3><p class="hint">Saved on this device. Redo onboarding to walk through every question again. Your current answers stay selected.</p>
+   <div class="cols2"><div><label class="lbl" for="pn">Name</label><input class="inp" id="pn" value="${esc(p.name)}" data-change="name"/></div><div><label class="lbl" for="pe">Email</label><input class="inp" id="pe" type="email" value="${esc(p.email)}" data-change="email" placeholder="you@school.edu"/></div></div>
+   <div class="row" style="margin-top:16px"><button class="btn soft sm" data-a="editStep" data-v="1">${ico('leaf')} Reset dietary needs</button><button class="btn soft sm" data-a="editStep" data-v="2">${ico('heart')} Reset what I love to eat</button><button class="btn sm" data-a="redoOnb">${ico('refresh')} Redo onboarding</button><button class="btn ghost sm" data-a="logout">Log out</button><button class="btn ghost sm" data-a="resetAll">${ico('trash')} Delete my data</button></div></section>
+  <section class="card"><h3>Dietary restrictions</h3><p class="hint">Only matching recipes appear.</p>${secDiet()}</section>
+  <section class="card"><h3>Allergies and ingredients to avoid</h3><p class="hint">Strict exclusions.</p>${secAllergy()}</section>
+  <section class="card"><h3>Food preferences</h3><p class="hint">We lean towards these cuisines.</p>${secCuisine()}</section>
+  <section class="card"><h3>Budget</h3><p class="hint">Maximum cost per serving.</p>${secBudget()}</section>
+  <section class="card"><h3>Location and grocery stores</h3><p class="hint">Used to compare prices.</p>${secLocation()}</section>
+  <section class="card"><h3>Cooking</h3>${secCook()}</section>
+  <p class="muted"><a href="#brand">GrowRecipes brand kit</a></p></div>`;
+}
+
+/* ---- Brand kit ---- */
+function brandView(){
+  const sw=[['Primary green','#2E8B57','#fff','Buttons, highlights, savings'],['Dark green','#1F5F3F','#fff','Wordmark, hover, headings'],['Light green','#EAF5EC','#252B27','Soft fills, selected cards'],['White','#FFFFFF','#252B27','Cards, navigation'],['Soft background','#F7FBF7','#252B27','Page background'],['Charcoal','#252B27','#fff','Text']];
+  return `<div class="page-h"><h1>GrowRecipes brand</h1><p>A sprout growing out of a bowl: healthy eating plus things that grow, including your savings.</p></div>
+  <h2 class="sec-t">Logo</h2><div class="bgrid">
+   <div class="bcell light"><span class="logo" style="font-size:40px">${markApp()}<span>Grow<span class="w2">Recipes</span></span></span><small>Main logo on light</small></div>
+   <div class="bcell dark"><span class="logo" style="font-size:40px">${markApp('#FFFFFF','#2E8B57')}<span>Grow<span class="w2">Recipes</span></span></span><small>Main logo on dark green</small></div>
+   <div class="bcell tint"><div style="width:96px">${markPlain('#2E8B57')}</div><small>Standalone icon</small></div>
+   <div class="bcell dark"><div style="width:96px">${markPlain('#FFFFFF')}</div><small>Standalone icon, reversed</small></div></div>
+  <h2 class="sec-t">App icon and favicon</h2><div class="card pad"><div class="appicons"><div style="width:140px">${markApp()}</div><div style="width:72px">${markApp()}</div><div style="width:40px">${markApp()}</div><div style="width:24px">${markApp()}</div></div>
+   <div class="row" style="margin-top:18px">${['app','icon','reversed'].map(k=>`<button class="btn soft sm" data-a="dlLogo" data-v="${k}">${ico('download')} ${{app:'App icon SVG',icon:'Icon SVG',reversed:'Reversed icon SVG'}[k]}</button>`).join('')}</div></div>
+  <h2 class="sec-t">Colour palette</h2><div class="sw">${sw.map(([n,h,t,u])=>`<div style="background:${h};color:${t}">${n}<span>${h}</span><span>${u}</span></div>`).join('')}</div>
+  <h2 class="sec-t">Type</h2><div class="card pad"><p style="font-family:var(--fd);font-size:44px;font-weight:800;letter-spacing:-.03em;line-height:1">Bricolage Grotesque</p><p class="muted" style="margin-bottom:18px">Headlines, prices and the wordmark</p><p style="font-size:24px;font-weight:600">Figtree</p><p class="muted">Body text and interface. Friendly, clear and easy to read at small sizes.</p></div>
+  <p style="margin-top:24px"><a href="#home">${ico('left')} Back to the app</a></p>`;
+}
+
+/* ================= ROUTER & RENDER ================= */
+const app=document.getElementById('app');
+const $=s=>document.querySelector(s);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+let DL=null;
+function route(){
+  const h=(location.hash||'').replace(/^#/,'');
+  if(h.startsWith('recipe-'))return {name:'recipe',id:h.slice(7)};
+  return {name:['home','discover','favourites','assistant','profile','brand'].includes(h)?h:'home'};
+}
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2600)}
+function modalHTML(){
+  if(U.modal==='login')return `<div class="scrim" data-a="closeModal" role="dialog" aria-modal="true" aria-labelledby="mh"><div class="modal"><h3 id="mh">Welcome back</h3><p class="muted" style="margin-bottom:16px">Enter the email you saved your profile with. In this demo, accounts are stored on this device.</p>
+    <form data-form="login"><label class="lbl" for="lemail">Email</label><input class="inp" id="lemail" type="email" required placeholder="you@school.edu" autocomplete="email"/>${U.modalErr?`<div class="err">${esc(U.modalErr)}</div>`:''}
+    <div class="row" style="margin-top:18px;justify-content:flex-end"><button type="button" class="btn ghost" data-a="closeModal">Cancel</button><button class="btn" type="submit">Log in</button></div></form></div></div>`;
+  if(U.modal==='reset')return `<div class="scrim" data-a="closeModal" role="dialog" aria-modal="true" aria-labelledby="mh"><div class="modal"><h3 id="mh">Delete your data?</h3><p class="muted">This removes your preferences, favourites and chats from this device. You will start onboarding again.</p>
+    <div class="row" style="margin-top:20px;justify-content:flex-end"><button class="btn ghost" data-a="closeModal">Cancel</button><button class="btn" data-a="doReset">Delete my data</button></div></div></div>`;
+  return '';
+}
+function render(){
+  const r=route();let html;
+  if(r.name==='brand'){
+    html=`<header class="top"><div class="wrap"><a href="${S.onboarded?'#home':'#home'}" style="display:inline-flex">${logo('sm')}</a></div></header><main><div class="wrap">${brandView()}</div></main>`;
+  }else if(!S.onboarded||U.editOnly){
+    html=onboardingView();
+  }else{
+    const body={home:homeView,discover:discoverView,favourites:favouritesView,assistant:assistantView,profile:profileView,recipe:()=>recipeView(r.id)}[r.name]();
+    html=shell(r,body);
+  }
+  const y=window.scrollY;
+  app.innerHTML=html+modalHTML();
+  U.animStep=S.step;
+  if(U.focus){const el=document.getElementById(U.focus);if(el){el.focus();}U.focus=null}
+  if(r.name==='assistant'&&S.onboarded){const m=$('#msgs');if(m)m.scrollTop=m.scrollHeight;if(U.pending){const q=U.pending;U.pending=null;setTimeout(()=>sendChat(q),50)}}
+  if(U.keepScroll){window.scrollTo(0,y);U.keepScroll=false}
+}
+function rerender(keep=true){U.keepScroll=keep;render()}
+window.addEventListener('hashchange',()=>{window.scrollTo(0,0);render()});
+
+/* ================= ACTIONS ================= */
+function toggleIn(arr,v){const i=arr.indexOf(v);i>=0?arr.splice(i,1):arr.push(v)}
+function prefsChanged(){S.rec.ids=null;save();rerender();toast('Saved. Your next recipes will reflect this.')}
+function inOnboarding(){return !S.onboarded||!!U.editOnly}
+function afterPref(){if(inOnboarding()){save();rerender()}else prefsChanged()}
+function syncFav(id){
+  document.querySelectorAll(`[data-a="fav"][data-id="${id}"]`).forEach(b=>{
+    b.setAttribute('aria-pressed',isFav(id));
+    if(b.classList.contains('heart'))b.setAttribute('aria-label',(isFav(id)?'Remove from favourites':'Save to favourites'));
+    else if(b.classList.contains('btn')&&b.textContent.match(/Save/))b.innerHTML=`${ico('heart')} ${isFav(id)?'Saved':'Save'}`;
+  });
+}
+function syncRegen(){
+  const b=$('#regenBtn');if(b){b.disabled=U.loading;b.innerHTML=`${ico('refresh',U.loading?'spin':'')} ${U.loading?'Finding recipes…':'Find more recipes'}`}
+  const rc=$('#recs');if(rc)rc.innerHTML=recsHTML();
+}
+const A={
+  start(){S.step=1;save();rerender(false);window.scrollTo(0,0)},
+  login(){U.modal='login';U.modalErr='';render();setTimeout(()=>$('#lemail')?.focus(),30)},
+  closeModal(el,e){if(e.target!==el&&el.classList.contains('scrim'))return;U.modal=null;render()},
+  next(){
+    if(S.step===1&&!S.prof.diet.length)S.prof.diet=['No restrictions'];
+    S.step=Math.min(STEP_COUNT+1,S.step+1);save();render();window.scrollTo(0,0);
+  },
+  back(){S.step=Math.max(0,S.step-1);save();render();window.scrollTo(0,0)},
+  finish(){S.onboarded=true;S.rec.ids=null;save();location.hash='#home';render();window.scrollTo(0,0)},
+  togDiet(el){
+    const v=el.dataset.v,d=S.prof.diet;
+    if(v==='No restrictions'){S.prof.diet=d.includes(v)?[]:['No restrictions']}
+    else{const i=d.indexOf('No restrictions');if(i>=0)d.splice(i,1);toggleIn(S.prof.diet,v)}
+    afterPref();
+  },
+  togCuisine(el){toggleIn(S.prof.cuisines,el.dataset.v);afterPref()},
+  togAllergy(el){toggleIn(S.prof.allergies,el.dataset.v);afterPref()},
+  rmAvoid(el){S.prof.avoid.splice(+el.dataset.v,1);afterPref()},
+  setBudget(el){S.prof.budget=el.dataset.v;S.prof.custom='';afterPref()},
+  setExp(el){S.prof.exp=el.dataset.v;afterPref()},
+  setTime(el){S.prof.time=el.dataset.v;afterPref()},
+  togStore(el){toggleIn(S.prof.stores,el.dataset.v);afterPref()},
+  useLoc(){
+    if(!navigator.geolocation){toast('Location is not available here. Type your city or postal code instead.');return}
+    toast('Asking for your location…');
+    navigator.geolocation.getCurrentPosition(p=>{S.prof.lat=p.coords.latitude;S.prof.lng=p.coords.longitude;save();rerender();toast('Location saved on this device.')},
+      ()=>toast('We could not get your location. Type your city or postal code instead.'),{timeout:8000});
+  },
+  async regen(){
+    if(U.loading)return;
+    U.loading=true;syncRegen();
+    try{await Promise.all([buildRecs(6,true),sleep(900)])}catch(e){}
+    U.loading=false;
+    if(route().name==='home')syncRegen();
+    $('#recs')?.scrollIntoView({behavior:'smooth',block:'nearest'});
+  },
+  preset(el){
+    Object.assign(U,{q:'',fCuisine:'All',fTime:'any',fCost:'any',fSort:'match',fProtein:false});
+    const v=el.dataset.v;
+    if(v==='cheap'){U.fCost='5';U.fSort='cost'}
+    if(v==='protein'){U.fProtein=true;U.fSort='protein'}
+    if(v==='quick'){U.fTime='20';U.fSort='time'}
+    if(v==='week'){U.fCost='4';U.fSort='cost'}
+  },
+  fav(el){
+    const id=el.dataset.id;toggleIn(S.favs,id);save();syncFav(id);
+    toast(isFav(id)?'Saved to favourites':'Removed from favourites');
+    if(route().name==='favourites')rerender();
+  },
+  cheapest(el){
+    const r=recipeById(el.dataset.id);if(!r)return;
+    S.cmpOpen[r.id]=true;save();$('#cmp').innerHTML=comparisonHTML(r);
+    $('#cmp').scrollIntoView({behavior:'smooth',block:'start'});
+  },
+  cmode(el){S.cmode=el.dataset.v;save();const r=recipeById(route().id);if(r)$('#cmp').innerHTML=comparisonHTML(r)},
+  togProtein(el){U.fProtein=!U.fProtein;el.setAttribute('aria-pressed',U.fProtein);$('#dres').innerHTML=discoverResults()},
+  clearFilters(){Object.assign(U,{q:'',fCuisine:'All',fTime:'any',fCost:'any',fSort:'match',fProtein:false});rerender()},
+  askAbout(el){S.ctx=el.dataset.id;U.pending=el.dataset.v||null;save();location.hash='#assistant'},
+  clearCtx(){S.ctx=null;save();rerender()},
+  send(el){sendChat(el.dataset.v)},
+  stopChat(){U.ctl?.abort()},
+  clearChat(){S.chat=[];save();rerender()},
+  editStep(el){U.editOnly=true;S.step=+el.dataset.v;U.animStep=-1;render();window.scrollTo(0,0)},
+  saveEdit(){U.editOnly=false;S.rec.ids=null;save();render();window.scrollTo(0,0);toast('Saved. Your next recipes will reflect this.')},
+  cancelEdit(){U.editOnly=false;render();window.scrollTo(0,0)},
+  redoOnb(){U.editOnly=false;S.onboarded=false;S.step=1;S.rec.ids=null;U.animStep=-1;save();location.hash='#home';render();window.scrollTo(0,0)},
+  logout(){S=freshState();lsSet(LSK,S);location.hash='#home';render();window.scrollTo(0,0)},
+  resetAll(){U.modal='reset';render()},
+  doReset(){const a=lsGet(ACCK)||{};if(S.prof.email){delete a[S.prof.email.toLowerCase()];lsSet(ACCK,a)}S=freshState();lsSet(LSK,S);U.modal=null;location.hash='#home';render();window.scrollTo(0,0)},
+  async dlLogo(el){
+    const v=el.dataset.v,svg=v==='app'?markApp():v==='icon'?markPlain('#2E8B57'):markPlain('#FFFFFF');
+    if(!DL){toast('Downloads are not available in this view.');return}
+    try{await DL.save({filename:{app:'growrecipes-app-icon.svg',icon:'growrecipes-icon.svg',reversed:'growrecipes-icon-reversed.svg'}[v],data:svg})}catch{}
+  }
+};
+document.addEventListener('click',e=>{
+  const el=e.target.closest('[data-a]');if(!el)return;
+  const f=A[el.dataset.a];if(!f)return;
+  if(el.tagName==='A'&&el.dataset.a!=='preset')e.preventDefault();
+  f(el,e);
+});
+
+/* inputs */
+const CH={
+  fCuisine:el=>{U.fCuisine=el.value;$('#dres').innerHTML=discoverResults()},
+  fTime:el=>{U.fTime=el.value;$('#dres').innerHTML=discoverResults()},
+  fCost:el=>{U.fCost=el.value;$('#dres').innerHTML=discoverResults()},
+  fSort:el=>{U.fSort=el.value;$('#dres').innerHTML=discoverResults()},
+  favC:el=>{U.favC=el.value;$('#favres').innerHTML=favResults()},
+  name:el=>{S.prof.name=el.value.trim();save()},
+  email:el=>{const v=el.value.trim();if(v&&!/^\S+@\S+\.\S+$/.test(v)){toast('That email does not look right.');return}S.prof.email=v;save()},
+  locText:el=>{S.prof.locText=el.value.trim();save()},
+  customBudget:el=>{const v=parseFloat(el.value);if(v>0){S.prof.budget='custom';S.prof.custom=String(v);document.querySelectorAll('.opt[data-a="setBudget"]').forEach(b=>b.setAttribute('aria-pressed','false'));save();if(S.onboarded){S.rec.ids=null;toast('Budget saved.')}}else{el.value=''}},
+  tickIng:el=>{const[id,v]=[el.dataset.id,el.dataset.v];(S.checks[id]=S.checks[id]||{})[v]=el.checked;save();el.closest('li').classList.toggle('done',el.checked)},
+  tickShop:el=>{S.shop[el.dataset.v]=el.checked;save();el.closest('label').classList.toggle('done',el.checked)}
+};
+document.addEventListener('change',e=>{const el=e.target.closest('[data-change]');if(el&&CH[el.dataset.change])CH[el.dataset.change](el)});
+document.addEventListener('input',e=>{
+  const el=e.target.closest('[data-input]');if(!el)return;
+  if(el.dataset.input==='searchLive'){U.q=el.value;if(route().name==='discover'&&$('#dres'))$('#dres').innerHTML=discoverResults()}
+  if(el.dataset.input==='favQ'){U.favQ=el.value;$('#favres').innerHTML=favResults()}
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'&&U.modal){U.modal=null;render();return}
+  if(e.key!=='Enter')return;
+  const el=e.target.closest('[data-enter]');if(!el)return;
+  e.preventDefault();
+  if(el.dataset.enter==='addAvoid'){
+    const v=el.value.trim();if(!v)return;
+    if(!S.prof.avoid.some(a=>a.toLowerCase()===v.toLowerCase()))S.prof.avoid.push(v);
+    U.focus=el.id;if(inOnboarding()){save();render()}else{S.rec.ids=null;save();render();toast('Added. Recipes with “'+v+'” are hidden.')}
+  }
+  if(el.dataset.enter==='globalSearch'){U.q=el.value;if(route().name==='discover'){rerender()}else location.hash='#discover'}
+});
+document.addEventListener('submit',e=>{
+  const f=e.target.closest('[data-form]');if(!f)return;e.preventDefault();
+  if(f.dataset.form==='chat'){const i=$('#chatIn');const v=i.value;i.value='';sendChat(v)}
+  if(f.dataset.form==='login'){
+    const em=$('#lemail').value.trim().toLowerCase(),a=(lsGet(ACCK)||{})[em];
+    if(!a){U.modalErr='No profile found for that email on this device. Choose Get started to create one.';render();setTimeout(()=>$('#lemail')?.focus(),30);return}
+    const n=Object.assign(freshState(),a);n.prof=Object.assign(freshProfile(),a.prof||{});S=n;lsSet(LSK,S);U.modal=null;location.hash='#home';render();window.scrollTo(0,0);toast('Welcome back!');
+  }
+});
+
+/* ================= CHAT ================= */
+function addBubble(html,cls,id){
+  const box=$('#msgs');if(!box)return null;
+  const d=document.createElement('div');d.className='m '+cls;if(id)d.id=id;d.innerHTML=html;box.appendChild(d);box.scrollTop=box.scrollHeight;return d;
+}
+function setSendMode(busy){
+  const b=$('#sendBtn');if(!b)return;
+  b.type=busy?'button':'submit';b.setAttribute('aria-label',busy?'Stop':'Send');
+  if(busy)b.dataset.a='stopChat';else delete b.dataset.a;
+  b.innerHTML=busy?ico('stop'):ico('send');
+}
+async function sendChat(text){
+  text=(text||'').trim();if(!text||U.busy)return;
+  if(route().name!=='assistant'){U.pending=text;location.hash='#assistant';return}
+  U.busy=true;
+  S.chat.push({role:'user',text});save();
+  const first=$('#msgs .m.a:only-child');if(first&&S.chat.length===1)first.remove();
+  addBubble(esc(text),'u');
+  const live=addBubble('<div class="by">'+ico('sparkle')+' GrowAI</div><div class="dots" aria-label="GrowAI is thinking"><i></i><i></i><i></i></div>','a','live');
+  let reply='';
+  const R=(h)=>{live.innerHTML='<div class="by">'+ico('sparkle')+' GrowAI</div>'+h;$('#msgs').scrollTop=$('#msgs').scrollHeight};
+  if(AI.available()){
+    U.ctl=new AbortController();setSendMode(true);
+    try{reply=await askAI(S.chat,t=>R(md(t)),U.ctl.signal)}
+    catch(e){
+      const code=e&&e.code;
+      if(code==='cancelled')reply=(e.text||'').trim()||'Stopped. Ask me again whenever you like.';
+      else if(code==='not_granted'||code==='unavailable'){U.aiOn=false;reply=localAnswer(text);const m=$('#aiMode');if(m)m.textContent='Using the built-in cooking helper. Live GrowAI is not available here.'}
+      else if(code==='rate_limited')reply='I am getting a lot of questions right now. Give me a moment, then try again.';
+      else reply=localAnswer(text);
+    }
+    setSendMode(false);
+  }else{
+    await sleep(550);reply=localAnswer(text);
+  }
+  if(!reply)reply='Sorry, I could not come up with an answer. Try rephrasing your question.';
+  S.chat.push({role:'assistant',text:reply});if(S.chat.length>40)S.chat=S.chat.slice(-40);save();
+  if(live.isConnected){R(md(reply));live.removeAttribute('id')}
+  U.busy=false;
+  $('#chatIn')?.focus();
+}
+
+/* ================= BOOT ================= */
+(async function boot(){
+  render();
+  try{await AI.init();if(window.claude&&window.claude.use)DL=await window.claude.use('downloads')}catch{}
+  if(route().name==='assistant'&&!U.busy)rerender();
+})();
+
+</script>
+</body>
+</html>

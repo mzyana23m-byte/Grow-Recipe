@@ -386,9 +386,35 @@ html{background:color-mix(in srgb,var(--g) 14%,var(--bg))}
 .welcome .ctas{flex:none;flex-wrap:nowrap}
 .welcome .ctas .btn{flex:1;padding:14px 10px;font-size:16px}
 
+
+/* ---------- launch animation ---------- */
+#splash{position:fixed;inset:0;z-index:200;background:#2E8B57;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;color:#fff;cursor:pointer;transition:opacity .55s ease,transform .55s ease}
+#splash.out{opacity:0;transform:scale(1.06);pointer-events:none}
+#splash .sp-mark{position:relative;width:132px;height:132px}
+#splash svg{width:100%;height:100%;overflow:visible;position:relative}
+#splash .ring{position:absolute;inset:-6px;border-radius:50%;border:3px solid rgba(255,255,255,.55);animation:spring 1s ease-out 1.15s both}
+#splash .ring.r2{animation-delay:1.3s;border-color:rgba(255,255,255,.3)}
+#splash .sp-bowl{transform-box:fill-box;transform-origin:50% 100%;animation:spbowl .6s cubic-bezier(.2,.9,.3,1.2) .1s both}
+#splash .sp-stem{stroke-dasharray:1;animation:spstem .45s ease-out .55s both}
+#splash .sp-l{transform-box:fill-box;transform-origin:100% 100%;animation:spleaf .6s cubic-bezier(.2,1.4,.4,1) .95s both}
+#splash .sp-r{transform-box:fill-box;transform-origin:0% 100%;animation:spleaf .6s cubic-bezier(.2,1.4,.4,1) 1.1s both}
+#splash .sp-word{font-family:var(--fd);font-weight:800;font-size:38px;letter-spacing:-.03em;line-height:1;display:flex;overflow:hidden;padding-bottom:4px}
+#splash .sp-word span{display:inline-block;animation:sprise .55s cubic-bezier(.2,.9,.3,1) both}
+#splash .sp-word .w2{color:#EAF5EC;font-weight:600}
+#splash .sp-tag{font-weight:600;font-size:16px;opacity:.92;animation:spfade .5s ease 1.75s both}
+@keyframes spbowl{from{opacity:0;transform:translateY(26px) scale(.5)}to{opacity:1;transform:none}}
+@keyframes spstem{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@keyframes spleaf{from{opacity:0;transform:scale(0) rotate(-35deg)}to{opacity:1;transform:none}}
+@keyframes spring{from{opacity:1;transform:scale(.7)}to{opacity:0;transform:scale(1.9)}}
+@keyframes sprise{from{transform:translateY(110%)}to{transform:none}}
+@keyframes spfade{from{opacity:0;transform:translateY(10px)}to{opacity:.92;transform:none}}
+body.splashing{overflow:hidden}
+@media (prefers-reduced-motion:reduce){#splash *{animation-duration:.01s!important;animation-delay:0s!important}}
 </style>
 </head>
-<body>
+<body class="splashing">
+<div id="splash" role="presentation" aria-hidden="true"><div class="sp-mark"><i class="ring"></i><i class="ring r2"></i><svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><path class="sp-bowl" d="M11 35h42c0 11.5-9.5 19-21 19S11 46.5 11 35z" fill="#fff"/><path class="sp-stem" pathLength="1" d="M32 36V22" stroke="#fff" stroke-width="3.5" stroke-linecap="round" fill="none"/><path class="sp-l" d="M32 29C21 30 15 24 15 15c9-1 16 4 17 14z" fill="#fff"/><path class="sp-r" d="M32 24C32 14 38 8 49 8c1 11-6 17-17 16z" fill="#fff"/></svg></div><div class="sp-word"><span style="animation-delay:1.35s">Grow</span><span class="w2" style="animation-delay:1.45s">Recipes</span></div><div class="sp-tag">Eat Better. Spend Less.</div></div>
+
 <div id="app"></div>
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
 <script>
@@ -1622,6 +1648,15 @@ async function sendChat(text){
   if(route().name==='assistant'&&!U.busy)rerender();
 })();
 
+
+/* launch animation: plays on every open, tap to skip */
+(function(){
+  const sp=document.getElementById('splash');if(!sp)return;
+  let done=false;
+  const end=()=>{if(done)return;done=true;sp.classList.add('out');document.body.classList.remove('splashing');setTimeout(()=>sp.remove(),600)};
+  sp.addEventListener('click',end);
+  setTimeout(end,2900);
+})();
 </script>
 </body>
 </html>

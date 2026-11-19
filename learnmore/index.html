@@ -1,4 +1,4 @@
-<!doctype html>
+\<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -7,8 +7,8 @@
 <meta name="description" content="GrowRecipes finds students affordable, allergy-safe recipes and the cheapest store for every ingredient.">
 <meta property="og:title" content="GrowRecipes — Eat better. Spend less.">
 <meta property="og:description" content="Affordable, allergy-safe recipes and the cheapest store for every ingredient.">
-<meta property="og:image" content="poster.jpg">
-<link rel="icon" href="logo.png">
+<meta property="og:image" content="/poster.jpg">
+<link rel="icon" href="/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Figtree:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -55,16 +55,16 @@ footer{text-align:center;padding:28px 20px 40px;color:#6b7a70;font-size:14px}
 </head>
 <body>
 <div class="wrap">
-  <nav><a class="brand" href="#top"><img src="logo.png" alt="">GrowRecipes</a><a class="btn sm" data-app href="app">Try the app</a></nav>
+  <nav><a class="brand" href="#top"><img src="/logo.png" alt="">GrowRecipes</a><a class="btn sm" data-app href="https://grow-recipe.vercel.app/">Try the app</a></nav>
   <header class="hero" id="top">
     <div class="copy">
       <span class="eyebrow">Made for McMaster students</span>
       <h1>Eat better. <span>Spend less.</span></h1>
       <p class="lead">GrowRecipes finds meals that fit your diet, allergies and budget, then shows the cheapest store for every ingredient.</p>
-      <div class="cta"><a class="btn" data-app href="app">Try it free →</a><a class="btn ghost" href="/learnmore" id="lm">Learn more</a></div>
+      <div class="cta"><a class="btn" data-app href="https://grow-recipe.vercel.app/">Try it free →</a><a class="btn ghost" href="#learn" id="lm">Learn more</a></div>
       </div>
     <div class="vid">
-      <video id="v" src="growrecipes-promo.mp4" poster="poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="GrowRecipes product demo"></video>
+      <video id="v" src="/growrecipes-promo.mp4" poster="/poster.jpg" autoplay muted loop playsinline preload="auto" aria-label="GrowRecipes product demo"></video>
       <button class="snd" id="snd" type="button">🔇 Tap for sound</button>
     </div>
     <p class="note">37-second tour of the app. Prices shown are sample prices.</p>
@@ -84,7 +84,7 @@ footer{text-align:center;padding:28px 20px 40px;color:#6b7a70;font-size:14px}
 <section class="final"><div class="wrap">
   <h2>Ask GrowAI when you get stuck.</h2>
   <p class="sub">Swap an ingredient, use up what's in your fridge, or make a recipe cheaper. It already knows your diet and budget.</p>
-  <a class="btn" data-app href="app">Open GrowRecipes →</a>
+  <a class="btn" data-app href="https://grow-recipe.vercel.app/">Open GrowRecipes →</a>
 </div></section>
 
 <footer>© GrowRecipes · Claire Sabourin, Deniz Suleymanof &amp; Summer Magtalas · COMMERCE 2GR0, McMaster University</footer>
@@ -96,15 +96,10 @@ const go=()=>{const p=v.play();if(p&&p.catch)p.catch(()=>{})};
 v.addEventListener('ended',()=>{v.currentTime=0;go()});
 v.addEventListener('pause',()=>{if(!document.hidden&&!v.ended&&!v._user)setTimeout(go,150)});
 v.addEventListener('canplay',go);
+v.addEventListener('error',()=>{v.controls=true;b.style.display='none'});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)go()});
 ['click','touchstart','scroll','keydown'].forEach(e=>addEventListener(e,go,{once:true,passive:true}));
 b.onclick=()=>{v.muted=!v.muted;go();b.textContent=v.muted?'🔇 Tap for sound':'🔊 Sound on'};
 go();
-// /learnmore URL for the same page: scroll to the section and keep the address bar in sync
-const lm=document.getElementById('learn');
-const setUrl=u=>{try{if(location.pathname!==u)history.replaceState(null,'',u)}catch(e){}};
-document.getElementById('lm').addEventListener('click',e=>{e.preventDefault();lm.scrollIntoView({behavior:'smooth'});setUrl('/learnmore')});
-addEventListener('scroll',()=>{setUrl(lm.getBoundingClientRect().top<innerHeight*0.5?'/learnmore':'/')},{passive:true});
-if(/\/learnmore\/?$/.test(location.pathname))addEventListener('load',()=>setTimeout(()=>lm.scrollIntoView(),50));
 </script>
 </body></html>
